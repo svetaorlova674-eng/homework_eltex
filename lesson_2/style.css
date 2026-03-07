@@ -9,7 +9,6 @@ header {
 footer {
     padding-top: 14px;
 }
-
 h1 {
   font-size: 24px;
   padding-top: 16px;
@@ -82,4 +81,5 @@ button:hover {
 ::placeholder {
     color: black;
     font-family: 'Inter';
+
 }
