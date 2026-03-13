@@ -9,6 +9,7 @@ header {
 footer {
     padding-top: 14px;
 }
+
 h1 {
   font-size: 24px;
   padding-top: 16px;
@@ -42,6 +43,15 @@ footer p {
 
 footer h2 {
     font-size: 20px;
+}
+
+time {
+    font-size: 12px;
+}
+
+address {
+    font-style: normal;
+    font-size: 16px;
 }
 
 .article, label {
@@ -81,5 +91,4 @@ button:hover {
 ::placeholder {
     color: black;
     font-family: 'Inter';
-
 }
