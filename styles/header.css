@@ -1,0 +1,36 @@
+header {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logotype {
+    padding: 10px;
+}
+
+.nav_list {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.active a {
+    color: var(--color-green);
+    font-weight: 700;
+}
+
+.nav-active {
+    transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+.nav-active:hover {
+    color: var(--color-green);
+    font-weight: 700;
+}
