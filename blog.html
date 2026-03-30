@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="images/favicon.png">
 </head>
-    
 <body>
     <header>
         <div class="menu">
@@ -116,6 +115,60 @@
         </div>
     </section>
 
+    <template id="article_template">
+        <article class="article">
+            <div class="article_pic">
+                <img class="art_pic" src="" alt="фото">
+            </div>
+            <div class="article_text">
+                <p>Заголовок статьи</p>
+                <time datetime="2025-10-16">Oct 16, 2025</time>
+            </div>
+        </article>
+    </template>
+
+    <section id="add_article" hidden>
+        <div class="add_article_inner">
+            <h3>Добавить статью</h3>
+            <div class="form_article">
+                <form class="form_art" method="post">
+                    <label for="headline">Заголовок</label>
+                    <input id="headline" class="color_text_headline" type="text" placeholder="Заголовок статьи" required>
+                    <label for="text_art">Текст статьи</label>
+                    <textarea id="text_art" class="color_text_art" placeholder="Текст статьи" required></textarea>
+                    <div class="but">
+                        <button id='sub' type="submit">Добавить</button>
+                        <button id='cancel' type="reset">Отмена</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="side-panel">
+        <button class="panel" onclick="showElement()" title="Добавить статью"><img src="images/Post add.svg" alt="Добавить статью"></button>
+        <button class="panel" onclick="showStatistics()" title="Просмотр статистики"><img src="images/stats.svg" alt="Просмотр статистики"></button>
+    </div>
+
+    <dialog id="statistics" popover="">
+        <div class="statistics_inner">
+            <div class="stat_top">
+                <h3>Статистика страницы</h3>
+                <button class="modal_close" type="button" data-close aria-label>x</button>
+            </div>
+            <div class="cell">
+                <div class="sum_art">
+                    <p>Всего статей:</p>
+                    <b id="article-count"></b>
+                </div>
+                <div class="comment">
+                    <p>Комментарии:</p>
+                    <b>0</b>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
     <footer>
         <div id="contacts">
             <div class="contacts_inner">
@@ -142,5 +195,6 @@
             </div>
         </div>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>
