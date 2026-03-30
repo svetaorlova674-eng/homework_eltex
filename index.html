@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Главная</title>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="styles/main-page.css">
         <link rel="icon" type="image/png" href="images/favicon.png">
     </head>
     <body>
@@ -16,7 +16,7 @@
                 </div>
                 <nav class="nav">
                     <ul class="nav_list">
-                        <li><a href="index.html" class="nav-active">About me</a></li>
+                        <li class="active"><a href="index.html" class="nav-active">About me</a></li>
                         <li><a href="blog.html" class="nav-active">Blog</a></li>
                         <li><a href="#contacts" class="nav-active">Contact</a></li>
                     </ul>
@@ -24,7 +24,7 @@
             </div>
         </header>
 
-        <section id="main">
+        <section class="main">
             <div class="main_inner">
                 <div class="about">
                     <h1>Hello! I'm Nelsom, a photographer</h1>
@@ -43,10 +43,10 @@
             </div>
         </section>
 
-        <section id="allpost">
+        <section class="allpost_article">
             <article>
                 <div class="post_content">
-                    <p id="post_category">Product photography</p>
+                    <p class="post_category">Product photography</p>
                     <h2>Paris secrets</h2>
                     <p>
                         Sint occaecat deserunt aliquip do occaecat ut quis. 
@@ -60,7 +60,7 @@
 
             <article>
                 <div class="post_content">
-                    <p id="post_category2">Portrait</p>
+                    <p class="post_category_second">Portrait</p>
                     <h2>Oceanic feeling</h2>
                     <p>
                         Sint occaecat deserunt aliquip do occaecat ut quis. 
@@ -75,7 +75,7 @@
             <button><a href="blog.html">Browse all posts</a></button>
         </section>
 
-        <section id="skills">
+        <section class="skills">
             <h1>My skills</h1>
             <div class="list">
                 <div class="list1">
@@ -93,7 +93,7 @@
             </div>
         </section>
 
-        <section id="work">
+        <section class="work">
             <div class="work_inner">
                 <div class="work_text">
                     <h1>My work</h1>
@@ -143,7 +143,7 @@
             </div>
         </section>
 
-        <section id="hobby">
+        <section class="hobby">
             <div class="hobby_inner">
                 <div class="hobby_text">
                     <h1>Hobby projects</h1>
@@ -155,15 +155,19 @@
                 <div class="hobby_grid">
                     <div class="hobby_item box_1">
                         <img src="images/mock img 2.png" alt="Девушка">
+                        <div class="hobby_overlay">Hobby</div>
                     </div>
                     <div class="hobby_item box_2">
                         <img src="images/mock img 1.png" alt="Композиция">
+                        <div class="hobby_overlay">Hobby</div>
                     </div>
                     <div class="hobby_item box_3">
                         <img src="images/hobby 3.jpg" alt="Гончарное дело">
+                        <div class="hobby_overlay">Hobby</div>
                     </div>
                     <div class="hobby_item box_4">
                         <img src="images/hobby 4.jpg" alt="Рисование">
+                        <div class="hobby_overlay">Hobby</div>
                     </div>
                 </div>
             </div>
@@ -187,9 +191,9 @@
                 <div class="form">
                     <form class="forms" method="get">
                         <label for="email">Email</label>
-                        <input id="email" type="email" placeholder="Your email address" required>
+                        <input class="email" type="email" placeholder="Your email address" required>
                         <label for="message">Input your message</label>
-                        <textarea id="message" placeholder="Describe your project" required></textarea>
+                        <textarea class="message" placeholder="Describe your project" required></textarea>
                         <button type="submit">Submit</button>
                     </form>
                 </div>

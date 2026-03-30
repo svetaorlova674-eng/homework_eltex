@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Блог</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/blog-page.css">
     <link rel="icon" type="image/png" href="images/favicon.png">
 </head>
 <body>
@@ -17,14 +17,14 @@
             <nav class="nav">
                 <ul class="nav_list">
                     <li><a href="index.html" class="nav-active">About me</a></li>
-                    <li><a href="blog.html" class="nav-active">Blog</a></li>
+                    <li class="active"><a href="blog.html" class="nav-active">Blog</a></li>
                     <li><a href="#contacts" class="nav-active">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section id="blogs">
+    <section class="blogs">
         <div class="blogs_inner">
             <div class="blogs_top">
                 <div class="blogs_text">
@@ -40,11 +40,12 @@
             </div>
 
             <div class="articles">
-                <article class="article_1">
-                    <div class="article_pic1">
+                <article class="article_large">
+                    <div class="article_pic_large">
+                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
                         <img class="art_pic" src="images/статья 1 чайки.jpg" alt="море">
                     </div>
-                    <div class="article_text1">
+                    <div class="article_text_large">
                         <h2>Minim anim pariatur magna duis sit et dolor inci</h2>
                         <p>Sint occaecat deserunt aliquip do occaecat ut quis. Cupidatat magna fugiat quis sit duis est in volup</p>
                         <time datetime="2025-10-16">Oct 16, 2025</time>
@@ -53,6 +54,7 @@
 
                 <article class="article">
                     <div class="article_pic">
+                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
                         <img class="art_pic" src="images/статья 2 фотоаппарат.jpg" alt="фотоаппарат">
                     </div>
                     <div class="article_text">
@@ -63,6 +65,7 @@
 
                 <article class="article">
                     <div class="article_pic">
+                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
                         <img class="art_pic" src="images/статья 3 горы.jpg" alt="горы">
                     </div>
                     <div class="article_text">
@@ -73,6 +76,7 @@
 
                 <article class="article">
                     <div class="article_pic">
+                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
                         <img class="art_pic" src="images/статья 4 архитектура.jpg" alt="архитектура">
                     </div>
                     <div class="article_text">
@@ -83,6 +87,7 @@
 
                 <article class="article">
                     <div class="article_pic">
+                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
                         <img class="art_pic" src="images/статья 5 картины.jpg" alt="картины">
                     </div>
                     <div class="article_text">
@@ -93,6 +98,7 @@
 
                 <article class="article">
                     <div class="article_pic">
+                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
                         <img class="art_pic" src="images/статья 6 скульптура.jpg" alt="скульптура">
                     </div>
                     <div class="article_text">
@@ -103,6 +109,7 @@
 
                 <article class="article">
                     <div class="article_pic">
+                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
                         <img class="art_pic" src="images/статья 7 воздушный шар.jpg" alt="воздушный шар">
                     </div>
                     <div class="article_text">
@@ -118,6 +125,7 @@
     <template id="article_template">
         <article class="article">
             <div class="article_pic">
+                <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
                 <img class="art_pic" src="" alt="фото">
             </div>
             <div class="article_text">
@@ -127,18 +135,18 @@
         </article>
     </template>
 
-    <section id="add_article" hidden>
+    <section class="add_article" hidden>
         <div class="add_article_inner">
             <h3>Добавить статью</h3>
             <div class="form_article">
                 <form class="form_art" method="post">
                     <label for="headline">Заголовок</label>
-                    <input id="headline" class="color_text_headline" type="text" placeholder="Заголовок статьи" required>
+                    <input class="headline color_text_headline" type="text" placeholder="Заголовок статьи" required>
                     <label for="text_art">Текст статьи</label>
-                    <textarea id="text_art" class="color_text_art" placeholder="Текст статьи" required></textarea>
+                    <textarea class="text_art color_text_art" placeholder="Текст статьи" required></textarea>
                     <div class="but">
-                        <button id='sub' type="submit">Добавить</button>
-                        <button id='cancel' type="reset">Отмена</button>
+                        <button class='sub' type="submit">Добавить</button>
+                        <button class='cancel' type="reset">Отмена</button>
                     </div>
                 </form>
             </div>
@@ -150,7 +158,7 @@
         <button class="panel" onclick="showStatistics()" title="Просмотр статистики"><img src="images/stats.svg" alt="Просмотр статистики"></button>
     </div>
 
-    <dialog id="statistics" popover="">
+    <dialog class="statistics" popover="">
         <div class="statistics_inner">
             <div class="stat_top">
                 <h3>Статистика страницы</h3>
@@ -187,9 +195,9 @@
             <div class="form">
                 <form class="forms" method="get">
                     <label for="email">Email</label>
-                    <input id="email" type="email" placeholder="Your email address" required>
+                    <input class="email" type="email" placeholder="Your email address" required>
                     <label for="message">Input your message</label>
-                    <textarea id="message" placeholder="Describe your project" required></textarea>
+                    <textarea class="message" placeholder="Describe your project" required></textarea>
                     <button type="submit">Submit</button>
                 </form>
             </div>

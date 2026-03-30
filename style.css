@@ -11,6 +11,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -60,6 +64,11 @@ a {
     color: black;
 }
 
+.active a {
+    color: var(--color-green);
+    font-weight: 700;
+}
+
 .nav-active {
     transition: color 0.3s ease, font-weight 0.3s ease;
 }
@@ -72,7 +81,7 @@ a {
 
 /* главная */
 
-#main {
+.main {
     padding: 20px 0;
     max-width: 1200px;
     margin: 0 auto;
@@ -88,7 +97,7 @@ a {
     max-width: 550px;
 }
 
-#main p {
+.main p {
     font-size: 15px;
     font-weight: 400;
     line-height: 26px;
@@ -119,7 +128,7 @@ a {
 
 /* посты */
 
-#allpost {
+.allpost_article {
     max-width: 1200px;
     margin: 0 auto;
     padding-top: 60px;
@@ -128,18 +137,18 @@ a {
     align-items: center;
 }
 
-#allpost article {
+.allpost_article article {
     display: flex;
     border-radius: 8px;
     overflow: hidden;
 }
 
-#allpost article:nth-child(1) {
+.allpost_article article:nth-child(1) {
     background-color: #FEF3EF;
     margin-bottom: 70px;
 }
 
-#allpost article:nth-child(2) {
+.allpost_article article:nth-child(2) {
     background-color: #F4FBF4;
 }
 
@@ -154,13 +163,13 @@ a {
     font-weight: 400;
 }
 
-#post_category {
+.post_category {
     font-size: 16px;
     color: var(--color-orange);
     margin-bottom: 0;
 }
 
-#post_category2 {
+.post_category_second {
     font-size: 16px;
     color: var(--color-green);
     margin-bottom: 0;
@@ -205,7 +214,7 @@ button a {
 
 /* скилл */
 
-#skills {
+.skills {
     padding: 55px 0;
     max-width: 1200px;
     margin: 0 auto;
@@ -232,7 +241,7 @@ button a {
 
 /* работа */
 
-#work {
+.work {
     padding-top: 80px;
     max-width: 1200px;
     margin: 0 auto;
@@ -302,7 +311,7 @@ button a {
 
 /* хобби */
 
-#hobby {
+.hobby {
     padding: 80px 0;
     max-width: 1200px;
     margin: 0 auto;
@@ -361,8 +370,7 @@ button a {
 }
 
 
-.hobby_item::after {
-    content: 'Hobby';
+.hobby_overlay {
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
@@ -376,7 +384,7 @@ button a {
     transition: opacity 0.4s ease;
 }
 
-.hobby_item:hover::after {
+.hobby_item:hover .hobby_overlay {
     opacity: 1;
 }
 
@@ -456,6 +464,7 @@ input {
 textarea {
     border: 1px solid #DDE0E7;
     background-color: transparent;
+    font-family: 'Inter';
     margin-top: 5px;
     height: 123px;
     border-radius: 5px;
@@ -473,15 +482,15 @@ textarea {
 }
 
 ::placeholder,
-#email,
-#message {
+.email,
+.message {
     color: var(--color-placeholder);
 }
 
 
 /* блог */
 
-#blogs {
+.blogs {
     padding: 80px 0 30px 0;
     max-width: 1200px;
     margin: 0 auto;
@@ -510,13 +519,13 @@ textarea {
     column-gap: 45px;
 }
 
-.article_1 {
+.article_large {
     display: flex;
     background-color: #FAFAFA;
     width: 100%;
 }
 
-.article_pic1 {
+.article_pic_large {
     width: 770px;
     height: 450px;
     flex-shrink: 0;
@@ -529,24 +538,24 @@ textarea {
     object-fit: cover;
 }
 
-.article_text1 {
+.article_text_large {
     padding: 30px 40px;
     min-width: 0;
 }
 
-.article_text1 h2 {
+.article_text_large h2 {
     font-size: 40px;
     font-weight: 700;
     margin: 0 0 12px 0;
     line-height: 1.3;
 }
 
-.article_text1 p {
+.article_text_large p {
     font-size: 18px;
     margin: 0 0 15px 0;
 }
 
-.article_text1 time {
+.article_text_large time {
     font-size: 16px;
 }
 
@@ -573,7 +582,7 @@ textarea {
     color: #666;
 }
 
-#blogs button {
+.blogs button {
     font-size: 18px;
     color: var(--color-green);
     width: 190px;
@@ -590,7 +599,7 @@ textarea {
 
 /* Добавить статью форма */
 
-#add_article {
+.add_article {
     padding-bottom: 60px;
     max-width: 1200px;
     margin: 0 auto;
@@ -611,13 +620,13 @@ textarea {
     color: #323743;
 }
 
-#headline {
+.headline {
     border: 1px solid #323743;
     font-size: 18px;
     outline: none;
 }
 
-#text_art {
+.text_art {
     border: 1px solid #323743;
     font-size: 18px;
     font-family: 'Inter';
@@ -635,7 +644,7 @@ textarea {
     margin-top: -15px;
 }
 
-#sub {
+.sub {
     color: var(--color-white);
     background-color: var(--color-green);
     font-size: 18px;
@@ -689,7 +698,7 @@ button.panel img {
 
 /* Окно статистики */
 
-#statistics {
+.statistics {
     width: 530px;
     height: 235px;
     border: none;
@@ -760,7 +769,7 @@ b {
         padding: 0 20px;
     }
 
-    #blogs {
+    .blogs {
         padding: 30px 20px;
     }
 
@@ -782,25 +791,25 @@ b {
         width: 120px;
     }
 
-    .article_1 {
+    .article_large {
         flex-direction: column;
         width: 100%;
     }
 
-    .article_pic1 {
+    .article_pic_large {
         width: 100%;
         height: 250px;
     }
 
-    .article_text1 {
+    .article_text_large {
         padding: 15px 20px;
     }
 
-    .article_text1 h2 {
+    .article_text_large h2 {
         font-size: 22px;
     }
 
-    .article_text1 p {
+    .article_text_large p {
         font-size: 16px;
     }
 
@@ -852,7 +861,7 @@ b {
         box-sizing: border-box;
     }
 
-    #add_article {
+    .add_article {
         padding: 0 20px 50px;
     }
 }
