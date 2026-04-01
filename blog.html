@@ -39,87 +39,10 @@
                 </div>
             </div>
 
-            <div class="articles">
-                <article class="article_large">
-                    <div class="article_pic_large">
-                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
-                        <img class="art_pic" src="images/статья 1 чайки.jpg" alt="море">
-                    </div>
-                    <div class="article_text_large">
-                        <h2>Minim anim pariatur magna duis sit et dolor inci</h2>
-                        <p>Sint occaecat deserunt aliquip do occaecat ut quis. Cupidatat magna fugiat quis sit duis est in volup</p>
-                        <time datetime="2025-10-16">Oct 16, 2025</time>
-                    </div>
-                </article>
-
-                <article class="article">
-                    <div class="article_pic">
-                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
-                        <img class="art_pic" src="images/статья 2 фотоаппарат.jpg" alt="фотоаппарат">
-                    </div>
-                    <div class="article_text">
-                        <p>Minim anim pariatur magna duis sit et dolor incididunt</p>
-                        <time datetime="2025-10-16">Oct 16, 2025</time>
-                    </div>
-                </article>
-
-                <article class="article">
-                    <div class="article_pic">
-                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
-                        <img class="art_pic" src="images/статья 3 горы.jpg" alt="горы">
-                    </div>
-                    <div class="article_text">
-                        <p>Minim anim pariatur magna duis sit et dolor incididunt</p>
-                        <time datetime="2025-10-16">Oct 16, 2025</time>
-                    </div>
-                </article>
-
-                <article class="article">
-                    <div class="article_pic">
-                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
-                        <img class="art_pic" src="images/статья 4 архитектура.jpg" alt="архитектура">
-                    </div>
-                    <div class="article_text">
-                        <p>Minim anim pariatur magna duis sit et dolor incididunt</p>
-                        <time datetime="2025-10-16">Oct 16, 2025</time>
-                    </div>
-                </article>
-
-                <article class="article">
-                    <div class="article_pic">
-                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
-                        <img class="art_pic" src="images/статья 5 картины.jpg" alt="картины">
-                    </div>
-                    <div class="article_text">
-                        <p>Minim anim pariatur magna duis sit et dolor incididunt</p>
-                        <time datetime="2025-10-16">Oct 16, 2025</time>
-                    </div>
-                </article>
-
-                <article class="article">
-                    <div class="article_pic">
-                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
-                        <img class="art_pic" src="images/статья 6 скульптура.jpg" alt="скульптура">
-                    </div>
-                    <div class="article_text">
-                        <p>Minim anim pariatur magna duis sit et dolor incididunt</p>
-                        <time datetime="2025-10-16">Oct 16, 2025</time>
-                    </div>
-                </article>
-
-                <article class="article">
-                    <div class="article_pic">
-                        <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
-                        <img class="art_pic" src="images/статья 7 воздушный шар.jpg" alt="воздушный шар">
-                    </div>
-                    <div class="article_text">
-                        <p>Minim anim pariatur magna duis sit et dolor incididunt</p>
-                        <time datetime="2025-10-16">Oct 16, 2025</time>
-                    </div>
-                </article>
+            <div class="no_articles">
+                <p>Нет статей</p>
             </div>
-            <button>Next ⭢</button>
-        </div>
+            <div class="articles" hidden></div>
     </section>
 
     <template id="article_template">
@@ -129,7 +52,8 @@
                 <img class="art_pic" src="" alt="фото">
             </div>
             <div class="article_text">
-                <p>Заголовок статьи</p>
+                <h4></h4>
+                <p></p>
                 <time datetime="2025-10-16">Oct 16, 2025</time>
             </div>
         </article>
