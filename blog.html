@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/blog-page.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body>
+    <header>
+        <div class="menu">
+            <div class="logotype">
+                <img src="images/favicon.png" alt="Логотип">
+            </div>
+            <nav class="nav">
+                <ul class="nav_list">
+                    <li><a href="index.html" class="nav-active">About me</a></li>
+                    <li class="active"><a href="blog.html" class="nav-active">Blog</a></li>
+                    <li><a href="#contacts" class="nav-active">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="blogs">
+        <div class="blogs_inner">
+            <div class="blogs_top">
+                <div class="blogs_text">
+                    <h1>My blogs</h1>
+                    <p>
+                        Lorem occaecat proident excepteur commodo et nulla eiusmod. 
+                        Elit esse aute officia dolor elit aute
+                    </p>
+                </div>
+                <div class="blogs_pic">
+                    <img src="images/Selection.svg" alt="My blogs">
+                </div>
+            </div>
+            <div class="loader" hidden>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="no_articles" hidden>
+                <p>Нет статей</p>
+            </div>
+            <div class="articles" hidden></div>
+    </section>
+
+    <template id="article_template">
+        <article class="article">
+            <div class="article_pic">
+                <div class="delete_article" title="Удалить статью"><img src="images/Delete.svg" alt="Удалить статью"></div>
+                <img class="art_pic" src="" alt="фото">
+            </div>
+            <div class="article_text">
+                <h4></h4>
+                <p></p>
+                <time datetime="2025-10-16">Oct 16, 2025</time>
+            </div>
+        </article>
+    </template>
+
+    <section class="add_article" hidden>
+        <div class="add_article_inner">
+            <h3>Добавить статью</h3>
+            <div class="form_article">
+                <form class="form_art" method="post">
+                    <label for="headline">Заголовок</label>
+                    <input class="headline color_text_headline" type="text" placeholder="Заголовок статьи" required>
+                    <label for="text_art">Текст статьи</label>
+                    <textarea class="text_art color_text_art" placeholder="Текст статьи" required></textarea>
+                    <div class="but">
+                        <button class='sub' type="submit">Добавить</button>
+                        <button class='cancel' type="reset">Отмена</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="side-panel">
+        <button class="panel" onclick="showElement()" title="Добавить статью"><img src="images/Post add.svg" alt="Добавить статью"></button>
+        <button class="panel" onclick="showStatistics()" title="Просмотр статистики"><img src="images/stats.svg" alt="Просмотр статистики"></button>
+    </div>
+
+    <dialog class="statistics" popover="">
+        <div class="statistics_inner">
+            <div class="stat_top">
+                <h3>Статистика страницы</h3>
+                <button class="modal_close" type="button" data-close aria-label>x</button>
+            </div>
+            <div class="cell">
+                <div class="sum_art">
+                    <p>Всего статей:</p>
+                    <b id="article-count"></b>
+                </div>
+                <div class="comment">
+                    <p>Комментарии:</p>
+                    <b>0</b>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <footer>
+        <div id="contacts">
+            <div class="contacts_inner">
+                <h1>Say hello and let's work together !</h1>
+                <address>
+                    <p>Email: <a href="mailto:alex@creativeblog.ru">alex@creativeblog.ru</a></p>
+                    <p>Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+                </address>
+                <div class="logo">
+                    <a href="https://vk.com/triksivi"><img src="images/vk.svg" alt="ВКонтакте"></a>
+                    <a href="https://t.me/triksivi"><img src="images/tg.svg" alt="Телеграмм"></a>
+                    <a href="https://github.com/svetaorlova674-eng"><img src="images/git.svg" alt="ГитХаб"></a> 
+                </div>
+                <p class="brand">© 2026 Brand, Inc</p>
+            </div>
+            <div class="form">
+                <form class="forms" method="get">
+                    <label for="email">Email</label>
+                    <input class="email" type="email" placeholder="Your email address" required>
+                    <label for="message">Input your message</label>
+                    <textarea class="message" placeholder="Describe your project" required></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
