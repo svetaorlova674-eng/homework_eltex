@@ -1,0 +1,85 @@
+body {
+    font-family: 'Inter';
+}
+
+header {
+    padding-bottom: 14px;
+}
+
+footer {
+    padding-top: 14px;
+}
+
+h1 {
+  font-size: 24px;
+  padding-top: 16px;
+}
+
+h2 {
+    font-size: 16px;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+p {
+    font-size: 12px;
+}
+
+li {
+    font-size: 12px;
+}
+
+a {
+    font-size: 14px;
+    color: black;
+}
+
+footer p {
+    font-size: 16px;
+    margin: 0px;
+}
+
+footer h2 {
+    font-size: 20px;
+}
+
+.article, label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 470px;
+}
+
+input {
+    background-color: #D9D9D9;
+    border: 0;
+    padding: 5px;
+    outline: none;
+}
+
+textarea {
+    height: 150px;
+    background-color: #D9D9D9;
+    border: 0;
+    padding: 5px;
+    outline: none;
+}
+
+button {
+    width: 100px;
+    border: 0;
+    background-color: #D9D9D9;
+    padding: 5px;
+    outline: none;
+}
+
+button:hover {
+    background-color: rgb(160, 160, 160);
+}
+
+::placeholder {
+    color: black;
+    font-family: 'Inter';
+}
