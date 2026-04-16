@@ -1,0 +1,13 @@
+<article [class.card-orange]="index % 2 === 0" [class.card-green]="index % 2 !== 0">
+  <div class="post_content">
+    <p [class.post_category]="index % 2 === 0" [class.post_category_second]="index % 2 !== 0">
+      {{ article.category }}
+    </p>
+    <h2>{{ article.title }}</h2>
+    <p>{{ article.description }}</p>
+    <button class="delete_btn" (click)="onDelete()">Удалить</button>
+  </div>
+  <div class="post_image">
+    <img class="post_im" [src]="article.image" [alt]="article.imageAlt">
+  </div>
+</article>
