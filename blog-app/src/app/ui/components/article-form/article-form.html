@@ -1,0 +1,15 @@
+<div class="add_article_inner">
+  <h3>Добавить статью</h3>
+  <div class="form_article">
+    <fieldset>
+      <label>Заголовок</label>
+      <input type="text" [(ngModel)]="title" placeholder="Заголовок статьи">
+      <label>Текст статьи</label>
+      <textarea [(ngModel)]="description" placeholder="Текст статьи"></textarea>
+      <div class="but">
+        <button class="sub" (click)="onSubmit()">Добавить</button>
+        <button class="cancel" (click)="cancel.emit()">Отмена</button>
+      </div>
+    </fieldset>
+  </div>
+</div>

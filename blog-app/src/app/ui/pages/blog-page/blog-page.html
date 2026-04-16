@@ -1,0 +1,72 @@
+<section class="blogs">
+  <div class="blogs_inner">
+    <div class="blogs_top">
+      <div class="blogs_text">
+        <h1>My blogs</h1>
+        <p>Lorem occaecat proident excepteur commodo et nulla eiusmod. Elit esse aute officia dolor elit aute</p>
+      </div>
+      <div class="blogs_pic">
+        <img src="images/Selection.svg" alt="My blogs">
+      </div>
+    </div>
+
+    @if (isLoading) {
+      <div class="loader">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    }
+
+    @if (!isLoading && articles.length === 0) {
+      <p class="no_articles">Нет статей</p>
+    }
+
+    @if (!isLoading) {
+      @for (article of articles; track article.id; let i = $index) {
+        <app-article-card
+          [article]="article"
+          [index]="i"
+          (delete)="deleteArticle($event)"
+        ></app-article-card>
+      }
+    }
+  </div>
+</section>
+
+<div class="side-panel">
+  <button class="panel" (click)="showForm = !showForm" [disabled]="isLoading" title="Добавить статью">
+    <img src="images/Post add.svg" alt="Добавить статью">
+  </button>
+  <button class="panel" (click)="openStats()" title="Статистика">
+    <img src="images/stats.svg" alt="Статистика">
+  </button>
+</div>
+
+<dialog #statsDialog class="statistics" (click)="onDialogClick($event)">
+  <div class="statistics_inner">
+    <div class="stat_top">
+      <h3>Статистика страницы</h3>
+      <button class="modal_close" (click)="closeStats()">x</button>
+    </div>
+    <div class="cell">
+      <div class="sum_art">
+        <p>Всего статей:</p>
+        <b>{{ articles.length }}</b>
+      </div>
+      <div class="comment">
+        <p>Комментарии:</p>
+        <b>0</b>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+@if (showForm) {
+  <section class="add_article">
+    <app-article-form
+      (submitArticle)="addArticle($event)"
+      (cancel)="showForm = false"
+    ></app-article-form>
+  </section>
+}
