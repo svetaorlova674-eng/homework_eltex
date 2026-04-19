@@ -64,12 +64,26 @@
 }
 
 .allpost_article article:nth-child(1) {
-    background-color: #FEF3EF;
+    background-color: #F4FBF4;
     margin-bottom: 70px;
 }
 
 .allpost_article article:nth-child(2) {
-    background-color: #F4FBF4;
+    background-color: #FEF3EF;
+}
+
+.allpost_article button {
+    border-color: var(--color-green);
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    width: 200px;
+    margin-top: 40px;
+}
+
+.allpost_article button a {
+    color: var(--color-green);
+    font-size: 18px;
 }
 
 .post_content {
@@ -85,13 +99,13 @@
 
 .post_category {
     font-size: 16px;
-    color: var(--color-orange);
+    color: var(--color-green);
     margin-bottom: 0;
 }
 
 .post_category_second {
     font-size: 16px;
-    color: var(--color-green);
+    color: var(--color-orange);
     margin-bottom: 0;
 }
 

@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Article } from '../main-page/main-page';
+import { Article } from '../../../models/article';
 import { ArticleCard } from '../../components/article-card/article-card';
 import { ArticleForm } from '../../components/article-form/article-form';
 
@@ -53,6 +53,14 @@ export class BlogPage implements OnInit {
   addArticle(article: Article) {
     this.articles.push({ ...article, id: Date.now() });
     this.showForm = false;
+  }
+
+  onCancelForm() {
+    this.showForm = false;
+  }
+
+  onToggleForm() {
+    this.showForm = !this.showForm;
   }
 
   openStats() {

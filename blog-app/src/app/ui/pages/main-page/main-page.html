@@ -17,10 +17,9 @@
 </section>
 
 <section class="allpost_article">
-@for (article of articles; track article.id; let i = $index) {
+@for (article of articles; track article.id) {
   <app-article-card
     [article]="article"
-    [index]="i"
     (delete)="deleteArticle($event)"
   ></app-article-card>
 }

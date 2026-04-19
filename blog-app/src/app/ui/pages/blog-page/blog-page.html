@@ -18,24 +18,23 @@
       </div>
     }
 
-    @if (!isLoading && articles.length === 0) {
-      <p class="no_articles">Нет статей</p>
-    }
-
     @if (!isLoading) {
-      @for (article of articles; track article.id; let i = $index) {
-        <app-article-card
-          [article]="article"
-          [index]="i"
-          (delete)="deleteArticle($event)"
-        ></app-article-card>
-      }
+      <div class="articles_list">
+        @for (article of articles; track article.id) {
+          <app-article-card
+            [article]="article"
+            (delete)="deleteArticle($event)"
+          ></app-article-card>
+        } @empty {
+          <p class="no_articles">Нет статей</p>
+        }
+      </div>
     }
   </div>
 </section>
 
 <div class="side-panel">
-  <button class="panel" (click)="showForm = !showForm" [disabled]="isLoading" title="Добавить статью">
+  <button class="panel" (click)="onToggleForm()" [disabled]="isLoading" title="Добавить статью">
     <img src="images/Post add.svg" alt="Добавить статью">
   </button>
   <button class="panel" (click)="openStats()" title="Статистика">
@@ -66,7 +65,7 @@
   <section class="add_article">
     <app-article-form
       (submitArticle)="addArticle($event)"
-      (cancel)="showForm = false"
+      (cancel)="onCancelForm()"
     ></app-article-form>
   </section>
 }
