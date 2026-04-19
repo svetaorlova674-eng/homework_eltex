@@ -1,15 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ArticleCard } from '../../components/article-card/article-card';
-
-export interface Article {
-  id: number;
-  category: string;
-  title: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-}
+import { Article } from '../../../models/article';
 
 @Component({
   selector: 'app-main-page',
@@ -36,8 +28,8 @@ export class MainPage {
       imageAlt: 'Горы в тумане рядом с океаном'
     }
   ];
-    deleteArticle(id: number) {
-    this.articles = this.articles.filter(a => a.id !== id);
-    }
-}
 
+  deleteArticle(id: number) {
+    this.articles = this.articles.filter(a => a.id !== id);
+  }
+}

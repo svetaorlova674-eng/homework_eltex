@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Article } from '../../pages/main-page/main-page';
+import { Article } from '../../../models/article';
 
 @Component({
   selector: 'app-article-form',
@@ -14,7 +14,6 @@ export class ArticleForm {
 
   title = '';
   description = '';
-  category = '';
 
   onSubmit() {
     if (!this.title || !this.description) return;
@@ -22,12 +21,11 @@ export class ArticleForm {
       id: 0,
       title: this.title,
       description: this.description,
-      category: this.category,
+      category: '',
       image: 'images/paris.png',
       imageAlt: this.title
     });
     this.title = '';
     this.description = '';
-    this.category = '';
   }
 }

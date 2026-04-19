@@ -6,9 +6,16 @@
         </div>
         <nav class="nav">
             <ul class="nav_list">
-                <li><a routerLink="/" class="nav-active">About me</a></li>
-                <li><a routerLink="/blog" class="nav-active">Blog</a></li>
-                <li><a class="nav-active" style="cursor:pointer" (click)="scrollToContacts()">Contact</a></li>
+                <li>
+                    <a routerLink="/" routerLinkActive="nav-current" 
+                    [routerLinkActiveOptions]="{exact: true}" class="nav-active">About me</a>
+                </li>
+                <li>
+                    <a routerLink="/blog" routerLinkActive="nav-current" class="nav-active">Blog</a>
+                </li>
+                <li>
+                    <a class="nav-active" style="cursor:pointer" (click)="scrollToContacts()">Contact</a>
+                </li>
             </ul>
         </nav>
     </div>

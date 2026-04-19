@@ -1,3 +1,115 @@
+/* страница блога */
+
+.blogs {
+  padding: 80px 0 30px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blogs_inner {
+  margin-bottom: 50px;
+}
+
+.blogs_top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+  gap: 200px;
+}
+
+.blogs_text {
+  max-width: 790px;
+}
+
+.blogs_text p {
+  font-size: 20px;
+  line-height: 29px;
+}
+
+/* лоадер */
+
+.loader {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  width: 100%;
+}
+
+.loader span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #61C15C;
+  animation: bounce 0.6s infinite alternate;
+}
+
+.loader span:nth-child(2) { animation-delay: 0.2s; }
+.loader span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  from { transform: translateY(0); opacity: 0.4; }
+  to { transform: translateY(-15px); opacity: 1; }
+}
+
+/* нет статей */
+
+.no_articles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: #68686A;
+  font-size: 16px;
+  width: 100%;
+}
+
+/* боковое меню */
+
+.side-panel {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background: #FDFEFF;
+  height: 115px;
+  width: 50px;
+  border-radius: 20px 0 0 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+button.panel {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  width: auto;
+}
+
+button.panel img {
+  width: 22px;
+  height: 22px;
+}
+
+/* форма добавления */
+
+.add_article {
+  padding-bottom: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* статистика */
+
 .statistics {
   width: 530px;
   border: none;
@@ -25,9 +137,7 @@
   margin-bottom: 10px;
 }
 
-.stat_top h3 {
-  margin: 0;
-}
+.stat_top h3 { margin: 0; }
 
 .modal_close {
   font-size: 24px;
@@ -56,51 +166,9 @@
 }
 
 .sum_art p,
-.comment p {
-  margin: 0 0 10px 0;
-}
+.comment p { margin: 0 0 10px 0; }
 
 b {
   font-size: 40px;
   font-family: 'Inter';
-}
-
-.no_articles {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 400px;
-  color: #68686A;
-  font-size: 16px;
-  width: 100%;
-}
-
-.loader {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  align-items: center;
-  height: 400px;
-  width: 100%;
-}
-
-.loader span {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: #61C15C;
-  animation: bounce 0.6s infinite alternate;
-}
-
-.loader span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.loader span:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes bounce {
-  from { transform: translateY(0); opacity: 0.4; }
-  to { transform: translateY(-15px); opacity: 1; }
 }
