@@ -1,31 +1,50 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Article } from '../../../models/article';
 
 @Component({
   selector: 'app-article-form',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './article-form.html',
   styleUrl: './article-form.scss'
 })
-export class ArticleForm {
+export class ArticleForm implements OnInit {
+  @Input() editArticle: Article | null = null;
   @Output() submitArticle = new EventEmitter<Article>();
   @Output() cancel = new EventEmitter<void>();
 
-  title = '';
-  description = '';
+  form!: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      title: [
+        this.editArticle?.title || '',
+        [Validators.required, Validators.minLength(25)]
+      ],
+      description: [
+        this.editArticle?.description || '',
+        [Validators.required]
+      ]
+    });
+  }
+
+  get title() { return this.form.get('title'); }
+  get description() { return this.form.get('description'); }
+
+  get isEditMode() { return this.editArticle !== null; }
 
   onSubmit() {
-    if (!this.title || !this.description) return;
+    if (this.form.invalid) return;
     this.submitArticle.emit({
-      id: 0,
-      title: this.title,
-      description: this.description,
-      category: '',
-      image: 'images/paris.png',
-      imageAlt: this.title
+      id: this.editArticle?.id || 0,
+      title: this.form.value.title,
+      description: this.form.value.description,
+      category: this.editArticle?.category || '',
+      image: this.editArticle?.image || 'images/paris.png',
+      imageAlt: this.form.value.title
     });
-    this.title = '';
-    this.description = '';
+    this.form.reset();
   }
 }

@@ -8,13 +8,14 @@ import { ArticleForm } from '../../components/article-form/article-form';
   imports: [ArticleCard, ArticleForm],
   templateUrl: './blog-page.html',
   styleUrl: './blog-page.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class BlogPage implements OnInit {
   @ViewChild('statsDialog') statsDialog!: ElementRef<HTMLDialogElement>;
 
   showForm = false;
   isLoading = true;
+  editingArticle: Article | null = null;
   articles: Article[] = [];
 
   private allArticles: Article[] = [
@@ -50,17 +51,31 @@ export class BlogPage implements OnInit {
     this.articles = this.articles.filter(a => a.id !== id);
   }
 
-  addArticle(article: Article) {
-    this.articles.push({ ...article, id: Date.now() });
+  onEditArticle(article: Article) {
+    this.editingArticle = article;
+    this.showForm = true;
+  }
+
+  saveArticle(article: Article) {
+    if (this.editingArticle) {
+      this.articles = this.articles.map(a =>
+        a.id === article.id ? { ...a, ...article } : a
+      );
+    } else {
+      this.articles.push({ ...article, id: Date.now() });
+    }
     this.showForm = false;
+    this.editingArticle = null;
   }
 
   onCancelForm() {
     this.showForm = false;
+    this.editingArticle = null;
   }
 
   onToggleForm() {
     this.showForm = !this.showForm;
+    if (!this.showForm) this.editingArticle = null;
   }
 
   openStats() {

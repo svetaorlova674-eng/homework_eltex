@@ -10,8 +10,13 @@ import { Article } from '../../../models/article';
 export class ArticleCard {
   @Input() article!: Article;
   @Output() delete = new EventEmitter<number>();
+  @Output() edit = new EventEmitter<Article>();
 
   onDelete() {
     this.delete.emit(this.article.id);
+  }
+
+  onEdit() {
+    this.edit.emit(this.article);
   }
 }

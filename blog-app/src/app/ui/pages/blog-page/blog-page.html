@@ -24,6 +24,7 @@
           <app-article-card
             [article]="article"
             (delete)="deleteArticle($event)"
+            (edit)="onEditArticle($event)"
           ></app-article-card>
         } @empty {
           <p class="no_articles">Нет статей</p>
@@ -64,7 +65,8 @@
 @if (showForm) {
   <section class="add_article">
     <app-article-form
-      (submitArticle)="addArticle($event)"
+      [editArticle]="editingArticle"
+      (submitArticle)="saveArticle($event)"
       (cancel)="onCancelForm()"
     ></app-article-form>
   </section>
