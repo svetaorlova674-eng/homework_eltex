@@ -1,13 +1,35 @@
 <div class="add_article_inner">
-  <h3>Добавить статью</h3>
+  <h3>{{ isEditMode ? 'Изменить статью' : 'Добавить статью' }}</h3>
   <div class="form_article">
-    <fieldset>
+    <fieldset [formGroup]="form">
       <label>Заголовок</label>
-      <input type="text" [(ngModel)]="title" placeholder="Заголовок статьи">
+      <input
+        type="text"
+        formControlName="title"
+        placeholder="Заголовок статьи"
+        [class.invalid]="title?.invalid && title?.touched"
+      >
+      @if (title?.touched && title?.hasError('required')) {
+        <span class="error">Поле обязательно для заполнения</span>
+      }
+      @if (title?.touched && title?.hasError('minlength')) {
+        <span class="error">Минимальная длина заголовка — 25 символов</span>
+      }
+
       <label>Текст статьи</label>
-      <textarea [(ngModel)]="description" placeholder="Текст статьи"></textarea>
+      <textarea
+        formControlName="description"
+        placeholder="Текст статьи"
+        [class.invalid]="description?.invalid && description?.touched"
+      ></textarea>
+      @if (description?.touched && description?.hasError('required')) {
+        <span class="error">Поле обязательно для заполнения</span>
+      }
+
       <div class="but">
-        <button class="sub" (click)="onSubmit()">Добавить</button>
+        <button class="sub" (click)="onSubmit()" [disabled]="form.invalid">
+          {{ isEditMode ? 'Сохранить' : 'Добавить' }}
+        </button>
         <button class="cancel" (click)="cancel.emit()">Отмена</button>
       </div>
     </fieldset>

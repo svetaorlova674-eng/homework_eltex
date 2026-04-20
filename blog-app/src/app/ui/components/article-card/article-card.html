@@ -7,7 +7,12 @@
   <div class="post_image">
     <img class="post_im" [src]="article.image" [alt]="article.imageAlt">
   </div>
-  <button class="delete_btn" (click)="onDelete()" title="Удалить статью">
-    <img src="images/Delete.svg" alt="Удалить">
-  </button>
+  <div class="card_actions">
+    <button class="delete_btn" (click)="onDelete()" title="Удалить статью">
+      <img src="images/Delete.svg" alt="Удалить">
+    </button>
+    <button class="edit_btn" (click)="onEdit()" title="Редактировать статью">
+      <img src="images/edit.svg" alt="Редактировать">
+    </button>
+  </div>
 </article>
