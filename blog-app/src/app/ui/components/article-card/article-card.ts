@@ -9,6 +9,7 @@ import { Article } from '../../../models/article';
 })
 export class ArticleCard {
   @Input() article!: Article;
+  @Input() isEditing: boolean = false;
   @Output() delete = new EventEmitter<number>();
   @Output() edit = new EventEmitter<Article>();
 

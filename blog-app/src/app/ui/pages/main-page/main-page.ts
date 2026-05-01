@@ -1,35 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ArticleCard } from '../../components/article-card/article-card';
+import { Hero } from '../../components/hero/hero';
+import { Skills } from '../../components/skills/skills';
+import { Work } from '../../components/work/work';
+import { Hobby } from '../../components/hobby/hobby';
+import { ARTICLES_SERVICE_TOKEN } from '../../../services/articles/articles-service.token';
 import { Article } from '../../../models/article';
 
 @Component({
   selector: 'app-main-page',
-  imports: [ArticleCard, RouterLink],
+  imports: [ArticleCard, RouterLink, Hero, Skills, Work, Hobby],
   templateUrl: './main-page.html',
   styleUrl: './main-page.scss'
 })
-export class MainPage {
-  articles: Article[] = [
-    {
-      id: 1,
-      category: 'Product photography',
-      title: 'Paris secrets',
-      description: 'Sint occaecat deserunt aliquip do occaecat ut quis. Cupidatat magna fugiat quis sit duis est in volup',
-      image: 'images/paris.png',
-      imageAlt: 'Вид на Эйфелеву башню'
-    },
-    {
-      id: 2,
-      category: 'Portrait',
-      title: 'Oceanic feeling',
-      description: 'Sint occaecat deserunt aliquip do occaecat ut quis. Cupidatat magna fugiat quis sit duis est in volup',
-      image: 'images/ocean.png',
-      imageAlt: 'Горы в тумане рядом с океаном'
-    }
-  ];
+export class MainPage implements OnInit {
+  private articlesService = inject(ARTICLES_SERVICE_TOKEN);
+  latestArticles: Article[] = [];
+
+  ngOnInit() {
+    this.articlesService.getArticles(1, 1000).subscribe(response => {
+      this.latestArticles = response.articles.slice(-2);
+    });
+  }
 
   deleteArticle(id: number) {
-    this.articles = this.articles.filter(a => a.id !== id);
+    this.articlesService.deleteArticle(id).subscribe(response => {
+      this.latestArticles = response.articles.slice(-2);
+    });
   }
 }

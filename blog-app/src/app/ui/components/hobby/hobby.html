@@ -1,0 +1,16 @@
+<section class="hobby">
+    <div class="hobby_inner">
+        <div class="hobby_text">
+            <h1>Hobby projects</h1>
+            <p>Duis nisi do exercitation in irure aliqua commodo nisi eu id reprehenderit dolore fugiat consectetur irure labore est ea.</p>
+        </div>
+        <div class="hobby_grid">
+            @for (item of hobbyItems; track $index) {
+                <div class="hobby_item" [class]="item.boxClass">
+                    <img [src]="item.image" [alt]="item.alt">
+                    <div class="hobby_overlay">Hobby</div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

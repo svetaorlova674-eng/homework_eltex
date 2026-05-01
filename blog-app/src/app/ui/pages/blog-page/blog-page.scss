@@ -172,3 +172,37 @@ b {
   font-size: 40px;
   font-family: 'Inter';
 }
+
+.pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.page_btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #61C15C;
+  border-radius: 5px;
+  background: transparent;
+  color: #61C15C;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page_btn.active {
+  background-color: #61C15C;
+  color: white;
+}
+
+.page_btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

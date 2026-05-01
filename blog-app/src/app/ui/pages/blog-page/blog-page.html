@@ -23,6 +23,7 @@
         @for (article of articles; track article.id) {
           <app-article-card
             [article]="article"
+            [isEditing]="editingArticle?.id === article.id"
             (delete)="deleteArticle($event)"
             (edit)="onEditArticle($event)"
           ></app-article-card>
@@ -31,6 +32,22 @@
         }
       </div>
     }
+
+    @if (!isLoading && totalPages > 1) {
+  <div class="pagination">
+    <button class="page_btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">←</button>
+
+    @for (page of pages; track page) {
+      <button
+        class="page_btn"
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)"
+      >{{ page }}</button>
+    }
+
+    <button class="page_btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">→</button>
+  </div>
+}
   </div>
 </section>
 
@@ -52,7 +69,7 @@
     <div class="cell">
       <div class="sum_art">
         <p>Всего статей:</p>
-        <b>{{ articles.length }}</b>
+        <b>{{ total }}</b>
       </div>
       <div class="comment">
         <p>Комментарии:</p>

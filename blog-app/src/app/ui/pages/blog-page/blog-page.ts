@@ -1,54 +1,67 @@
-import { Component, ViewChild, ElementRef, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Article } from '../../../models/article';
 import { ArticleCard } from '../../components/article-card/article-card';
 import { ArticleForm } from '../../components/article-form/article-form';
+import { ARTICLES_SERVICE_TOKEN } from '../../../services/articles/articles-service.token';
+import { ArticlesStoreService } from '../../../services/articles/articles-store.service';
+const PAGE_SIZE = 7;
 
 @Component({
   selector: 'app-blog-page',
   imports: [ArticleCard, ArticleForm],
   templateUrl: './blog-page.html',
   styleUrl: './blog-page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogPage implements OnInit {
   @ViewChild('statsDialog') statsDialog!: ElementRef<HTMLDialogElement>;
 
+  private articlesService = inject(ARTICLES_SERVICE_TOKEN);
+  private store = inject(ArticlesStoreService);
+
   showForm = false;
   isLoading = true;
   editingArticle: Article | null = null;
-  articles: Article[] = [];
 
-  private allArticles: Article[] = [
-    {
-      id: 1,
-      category: 'Product photography',
-      title: 'Paris secrets',
-      description: 'Sint occaecat deserunt aliquip do occaecat ut quis. Cupidatat magna fugiat quis sit duis est in volup',
-      image: 'images/paris.png',
-      imageAlt: 'Вид на Эйфелеву башню'
-    },
-    {
-      id: 2,
-      category: 'Portrait',
-      title: 'Oceanic feeling',
-      description: 'Sint occaecat deserunt aliquip do occaecat ut quis. Cupidatat magna fugiat quis sit duis est in volup',
-      image: 'images/ocean.png',
-      imageAlt: 'Горы в тумане рядом с океаном'
-    }
-  ];
-
-  constructor(private cdr: ChangeDetectorRef) {}
+  get articles() { return this.store.articles(); }
+  get currentPage() { return this.store.currentPage(); }
+  get total() { return this.store.total(); }
+  get totalPages() { return Math.ceil(this.total / PAGE_SIZE); }
 
   ngOnInit() {
+    this.loadArticles(this.currentPage);
+  }
+
+  private loadArticles(page: number) {
+    this.isLoading = true;
     setTimeout(() => {
-      this.articles = this.allArticles;
-      this.isLoading = false;
-      this.cdr.markForCheck();
+      this.articlesService.getArticles(page, PAGE_SIZE).subscribe(response => {
+        this.store.saveArticles(response.articles);
+        this.store.saveTotal(response.total);
+        this.store.savePage(page);
+        this.isLoading = false;
+      });
     }, 1500);
   }
 
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+    this.loadArticles(page);
+  }
+
+  get pages(): number[] {
+  return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+}
+
   deleteArticle(id: number) {
-    this.articles = this.articles.filter(a => a.id !== id);
+    this.articlesService.deleteArticle(id).subscribe(response => {
+      this.store.saveArticles(response.articles);
+      this.store.saveTotal(response.total);
+      if (this.editingArticle?.id === id) {
+        this.editingArticle = null;
+        this.showForm = false;
+      }
+    });
   }
 
   onEditArticle(article: Article) {
@@ -58,11 +71,16 @@ export class BlogPage implements OnInit {
 
   saveArticle(article: Article) {
     if (this.editingArticle) {
-      this.articles = this.articles.map(a =>
-        a.id === article.id ? { ...a, ...article } : a
-      );
+      this.articlesService.updateArticle(article).subscribe(response => {
+        this.store.saveArticles(response.articles);
+        this.store.saveTotal(response.total);
+      });
     } else {
-      this.articles.push({ ...article, id: Date.now() });
+      this.articlesService.addArticle(article).subscribe(response => {
+        this.store.saveArticles(response.articles);
+        this.store.saveTotal(response.total);
+        this.store.savePage(this.totalPages);
+      });
     }
     this.showForm = false;
     this.editingArticle = null;

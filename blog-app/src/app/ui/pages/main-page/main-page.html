@@ -1,121 +1,17 @@
-<section class="main">
-    <div class="main_inner">
-        <div class="about">
-            <h1>Hello! I'm Nelsom, a photographer</h1>
-            <p>
-                Occaecat elit pariatur non Lorem laborum proident Lorem non sint<br> nostrud. 
-                Et dolore incididunt mollit nostrud Lorem dolore. 
-                Qui aliquip<br> aute amet eu adipisicing velit ullamco nulla sint enim do quis aute
-            </p>
-            <a href="#skills" class="about_me">More about me ></a>
-        </div>
-        <div class="picture">
-            <img class="mountains" src="images/mountains.png" alt="Красивые горы и голубая река">
-            <img class="myblogs" src="images/Selection.svg" alt="My blogs">
-        </div>
-    </div>
-</section>
+<app-hero></app-hero>
 
-<section class="allpost_article">
-@for (article of articles; track article.id) {
-  <app-article-card
-    [article]="article"
-    (delete)="deleteArticle($event)"
-  ></app-article-card>
+@if (latestArticles.length > 0) {
+  <section class="allpost_article">
+    @for (article of latestArticles; track article.id) {
+      <app-article-card
+        [article]="article"
+        (delete)="deleteArticle($event)"
+      ></app-article-card>
+    }
+    <button><a routerLink="/blog">Browse all posts</a></button>
+  </section>
 }
 
-  <p>Всего статей: {{ articles.length }}</p>
-  <button><a routerLink="/blog">Browse all posts</a></button>
-</section>
-
-<section class="skills">
-    <h1>My skills</h1>
-    <div class="list">
-        <div class="list1">
-            <p>Photography</p>
-            <p>Brand Identity</p>
-        </div>
-        <div class="list2">
-            <p>Graphic Design</p>
-            <p>Copy Writing</p>
-        </div>
-        <div class="list3">
-            <p>Creativity</p>
-            <p>Team Working</p>
-        </div>
-    </div>
-</section>
-
-<section class="work">
-    <div class="work_inner">
-        <div class="work_text">
-            <h1>My work</h1>
-            <p>Duis nisi do exercitation in irure aliqua commodo nisi eu id reprehenderit dolore fugiat consectetur irure</p>
-        </div>
-        <div class="list_work">
-            <div class="work_item_wrapper">
-                <article class="work_item">
-                    <div class="work_pic">
-                        <img src="images/Consectetur.svg" alt="логотип Consectetur">
-                    </div>
-                    <div class="work_content">
-                        <time datetime="2016">Consectetur - (2016 - 2017)</time>
-                        <h2>Graphic design</h2>
-                        <p>Nostrud tempor cillum sunt excepteur do ut proident deserunt enim consequat exercitatio</p>
-                    </div>
-                </article>
-            </div>
-            <div class="work_item_wrapper">
-                <article class="work_item">
-                    <div class="work_pic">
-                        <img src="images/Bibendum.svg" alt="логотип Bibendum">
-                    </div>
-                    <div class="work_content">
-                        <time datetime="2017">Bibendum - (2017 - 2020)</time>
-                        <h2>Photographer</h2>
-                        <p>Ad do dolore cillum dolor et ex non dolor qui. Dolor amet tempor pariatur officia pariatur et</p>
-                    </div>
-                </article>
-            </div>
-            <div class="work_item_wrapper">
-                <article class="work_item">
-                    <div class="work_pic">
-                        <img src="images/Adipiscing.svg" alt="логотип Adipiscing">
-                    </div>
-                    <div class="work_content">
-                        <time datetime="2020">Adipiscing - (2020 - 2022)</time>
-                        <h2>Photographer's Assistant</h2>
-                        <p>Ad do dolore cillum dolor et ex non dolor qui. Dolor amet tempor pariatur officia pariatur et</p>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="hobby">
-    <div class="hobby_inner">
-        <div class="hobby_text">
-            <h1>Hobby projects</h1>
-            <p>Duis nisi do exercitation in irure aliqua commodo nisi eu id reprehenderit dolore fugiat consectetur irure labore est ea.</p>
-        </div>
-        <div class="hobby_grid">
-            <div class="hobby_item box_1">
-                <img src="images/mock img 2.png" alt="Девушка">
-                <div class="hobby_overlay">Hobby</div>
-            </div>
-            <div class="hobby_item box_2">
-                <img src="images/mock img 1.png" alt="Композиция">
-                <div class="hobby_overlay">Hobby</div>
-            </div>
-            <div class="hobby_item box_3">
-                <img src="images/hobby 3.jpg" alt="Гончарное дело">
-                <div class="hobby_overlay">Hobby</div>
-            </div>
-            <div class="hobby_item box_4">
-                <img src="images/hobby 4.jpg" alt="Рисование">
-                <div class="hobby_overlay">Hobby</div>
-            </div>
-        </div>
-    </div>
-</section>
+<app-skills></app-skills>
+<app-work></app-work>
+<app-hobby></app-hobby>

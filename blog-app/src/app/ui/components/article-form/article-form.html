@@ -1,37 +1,42 @@
 <div class="add_article_inner">
-  <h3>{{ isEditMode ? 'Изменить статью' : 'Добавить статью' }}</h3>
+  <h3>{{ formTitle() }}</h3>
   <div class="form_article">
-    <fieldset [formGroup]="form">
-      <label>Заголовок</label>
-      <input
-        type="text"
-        formControlName="title"
-        placeholder="Заголовок статьи"
-        [class.invalid]="title?.invalid && title?.touched"
-      >
-      @if (title?.touched && title?.hasError('required')) {
-        <span class="error">Поле обязательно для заполнения</span>
-      }
-      @if (title?.touched && title?.hasError('minlength')) {
-        <span class="error">Минимальная длина заголовка — 25 символов</span>
-      }
+    <div [formGroup]="form">
+      <div class="control">
+        <label>Заголовок *</label>
+        <input
+          type="text"
+          formControlName="title"
+          placeholder="Заголовок статьи"
+          [class.input-error]="hasError('title')"
+        >
+        @if (hasError('title')) {
+          @for (errorMsg of getControlErrors('title'); track $index) {
+            <span class="error">{{ errorMsg }}</span>
+          }
+        }
+      </div>
 
-      <label>Текст статьи</label>
-      <textarea
-        formControlName="description"
-        placeholder="Текст статьи"
-        [class.invalid]="description?.invalid && description?.touched"
-      ></textarea>
-      @if (description?.touched && description?.hasError('required')) {
-        <span class="error">Поле обязательно для заполнения</span>
-      }
+      <div class="control">
+        <label>Текст статьи *</label>
+        <textarea
+          formControlName="description"
+          placeholder="Текст статьи"
+          [class.input-error]="hasError('description')"
+        ></textarea>
+        @if (hasError('description')) {
+          @for (errorMsg of getControlErrors('description'); track $index) {
+            <span class="error">{{ errorMsg }}</span>
+          }
+        }
+      </div>
 
       <div class="but">
         <button class="sub" (click)="onSubmit()" [disabled]="form.invalid">
-          {{ isEditMode ? 'Сохранить' : 'Добавить' }}
+          {{ saveButtonTitle() }}
         </button>
         <button class="cancel" (click)="cancel.emit()">Отмена</button>
       </div>
-    </fieldset>
+    </div>
   </div>
 </div>

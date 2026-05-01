@@ -11,14 +11,6 @@ h3 {
   font-weight: 700;
 }
 
-fieldset {
-  border: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
 label {
   font-size: 18px;
   color: #323743;
@@ -48,6 +40,12 @@ textarea {
   color: #323743;
 }
 
+.control {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
 .but {
   display: flex;
   gap: 20px;
@@ -66,6 +64,11 @@ textarea {
   margin-top: 0;
 }
 
+.sub:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .cancel {
   color: #61C15C;
   background-color: transparent;
@@ -78,20 +81,13 @@ textarea {
   margin-top: 0;
 }
 
+.input-error {
+  border-color: red !important;
+}
+
 .error {
   color: red;
   font-size: 11px;
   margin-top: 4px;
-  margin-bottom: 10px;
   display: block;
-}
-
-input.invalid,
-textarea.invalid {
-  border-color: red;
-}
-
-.sub:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
