@@ -1,0 +1,12 @@
+<section class="skills" id="skills">
+    <h1>My skills</h1>
+    <div class="list">
+        @for (group of skillGroups; track $index) {
+            <div class="skill_group">
+                @for (skill of group; track $index) {
+                    <p>{{ skill }}</p>
+                }
+            </div>
+        }
+    </div>
+</section>

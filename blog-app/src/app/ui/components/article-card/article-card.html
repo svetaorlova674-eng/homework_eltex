@@ -8,7 +8,12 @@
     <img class="post_im" [src]="article.image" [alt]="article.imageAlt">
   </div>
   <div class="card_actions">
-    <button class="delete_btn" (click)="onDelete()" title="Удалить статью">
+    <button 
+      class="delete_btn" 
+      (click)="onDelete()" 
+      title="Удалить статью"
+      [disabled]="isEditing"
+    >
       <img src="images/Delete.svg" alt="Удалить">
     </button>
     <button class="edit_btn" (click)="onEdit()" title="Редактировать статью">

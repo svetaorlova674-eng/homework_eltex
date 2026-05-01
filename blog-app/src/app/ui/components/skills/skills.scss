@@ -1,0 +1,24 @@
+.skills {
+    padding: 55px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.list {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list p {
+    font-size: 24px;
+}
+
+.list p::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-gray);
+    margin-top: 10px;
+    width: 368px;
+}

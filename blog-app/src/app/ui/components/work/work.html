@@ -1,0 +1,24 @@
+<section class="work">
+    <div class="work_inner">
+        <div class="work_text">
+            <h1>My work</h1>
+            <p>Duis nisi do exercitation in irure aliqua commodo nisi eu id reprehenderit dolore fugiat consectetur irure</p>
+        </div>
+        <div class="list_work">
+            @for (item of workItems; track $index) {
+                <div class="work_item_wrapper">
+                    <article class="work_item">
+                        <div class="work_pic">
+                            <img [src]="item.logo" [alt]="item.company">
+                        </div>
+                        <div class="work_content">
+                            <time>{{ item.company }} - ({{ item.period }})</time>
+                            <h2>{{ item.role }}</h2>
+                            <p>{{ item.description }}</p>
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+    </div>
+</section>

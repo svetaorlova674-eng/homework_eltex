@@ -61,6 +61,11 @@ article:hover .card_actions {
   height: 18px;
 }
 
+.delete_btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 .post_content {
     max-width: 400px;
     margin: 50px;
