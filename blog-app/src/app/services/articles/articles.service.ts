@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Article } from '../../models/article';
-import { IArticlesService, ArticleResponse } from './articles-service.interface';
+import { IArticlesService } from './articles-service.interface';
+import { ArticleResponse } from './types/article-response';
 
 const LS_KEY = 'articles';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ArticlesService implements IArticlesService {
 
   private loadFromStorage(): Article[] {

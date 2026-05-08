@@ -1,10 +1,6 @@
 import { Observable } from 'rxjs';
 import { Article } from '../../models/article';
-
-export interface ArticleResponse {
-  articles: Article[];
-  total: number;
-}
+import { ArticleResponse } from './types/article-response';
 
 export interface IArticlesService {
   getArticles(page: number, pageSize: number): Observable<ArticleResponse>;

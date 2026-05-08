@@ -1,9 +1,10 @@
-import { Component, ViewChild, ElementRef, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, inject, ChangeDetectionStrategy, signal, computed } from '@angular/core';
 import { Article } from '../../../models/article';
 import { ArticleCard } from '../../components/article-card/article-card';
 import { ArticleForm } from '../../components/article-form/article-form';
 import { ARTICLES_SERVICE_TOKEN } from '../../../services/articles/articles-service.token';
 import { ArticlesStoreService } from '../../../services/articles/articles-store.service';
+
 const PAGE_SIZE = 7;
 
 @Component({
@@ -19,58 +20,57 @@ export class BlogPage implements OnInit {
   private articlesService = inject(ARTICLES_SERVICE_TOKEN);
   private store = inject(ArticlesStoreService);
 
-  showForm = false;
-  isLoading = true;
-  editingArticle: Article | null = null;
+  showForm = signal(false);
+  isLoading = signal(true);
+  editingArticle = signal<Article | null>(null);
 
-  get articles() { return this.store.articles(); }
-  get currentPage() { return this.store.currentPage(); }
-  get total() { return this.store.total(); }
-  get totalPages() { return Math.ceil(this.total / PAGE_SIZE); }
+  protected articles = this.store.articles;
+  protected currentPage = this.store.currentPage;
+  protected total = this.store.total;
+  protected totalPages = computed(() => Math.ceil(this.total() / PAGE_SIZE));
+  protected pages = computed(() =>
+    Array.from({ length: this.totalPages() }, (_, i) => i + 1)
+  );
 
   ngOnInit() {
-    this.loadArticles(this.currentPage);
+    this.loadArticles(this.currentPage());
   }
 
   private loadArticles(page: number) {
-    this.isLoading = true;
+    this.isLoading.set(true);
     setTimeout(() => {
       this.articlesService.getArticles(page, PAGE_SIZE).subscribe(response => {
         this.store.saveArticles(response.articles);
         this.store.saveTotal(response.total);
         this.store.savePage(page);
-        this.isLoading = false;
+        this.isLoading.set(false);
       });
     }, 1500);
   }
 
   goToPage(page: number) {
-    if (page < 1 || page > this.totalPages) return;
+    if (page < 1 || page > this.totalPages()) return;
     this.loadArticles(page);
   }
-
-  get pages(): number[] {
-  return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-}
 
   deleteArticle(id: number) {
     this.articlesService.deleteArticle(id).subscribe(response => {
       this.store.saveArticles(response.articles);
       this.store.saveTotal(response.total);
-      if (this.editingArticle?.id === id) {
-        this.editingArticle = null;
-        this.showForm = false;
+      if (this.editingArticle()?.id === id) {
+        this.editingArticle.set(null);
+        this.showForm.set(false);
       }
     });
   }
 
   onEditArticle(article: Article) {
-    this.editingArticle = article;
-    this.showForm = true;
+    this.editingArticle.set(article);
+    this.showForm.set(true);
   }
 
   saveArticle(article: Article) {
-    if (this.editingArticle) {
+    if (this.editingArticle()) {
       this.articlesService.updateArticle(article).subscribe(response => {
         this.store.saveArticles(response.articles);
         this.store.saveTotal(response.total);
@@ -79,21 +79,21 @@ export class BlogPage implements OnInit {
       this.articlesService.addArticle(article).subscribe(response => {
         this.store.saveArticles(response.articles);
         this.store.saveTotal(response.total);
-        this.store.savePage(this.totalPages);
+        this.store.savePage(this.totalPages());
       });
     }
-    this.showForm = false;
-    this.editingArticle = null;
+    this.showForm.set(false);
+    this.editingArticle.set(null);
   }
 
   onCancelForm() {
-    this.showForm = false;
-    this.editingArticle = null;
+    this.showForm.set(false);
+    this.editingArticle.set(null);
   }
 
   onToggleForm() {
-    this.showForm = !this.showForm;
-    if (!this.showForm) this.editingArticle = null;
+    this.showForm.update(v => !v);
+    if (!this.showForm()) this.editingArticle.set(null);
   }
 
   openStats() {
