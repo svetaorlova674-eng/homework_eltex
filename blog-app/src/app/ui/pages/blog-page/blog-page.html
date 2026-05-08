@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    @if (isLoading) {
+    @if (isLoading()) {
       <div class="loader">
         <span></span>
         <span></span>
@@ -18,12 +18,12 @@
       </div>
     }
 
-    @if (!isLoading) {
+    @if (!isLoading()) {
       <div class="articles_list">
-        @for (article of articles; track article.id) {
+        @for (article of articles(); track article.id) {
           <app-article-card
             [article]="article"
-            [isEditing]="editingArticle?.id === article.id"
+            [isEditing]="editingArticle()?.id === article.id"
             (delete)="deleteArticle($event)"
             (edit)="onEditArticle($event)"
           ></app-article-card>
@@ -31,32 +31,30 @@
           <p class="no_articles">Нет статей</p>
         }
       </div>
+
+      @if (totalPages() > 1) {
+        <div class="pagination">
+          <button class="page_btn" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1">←</button>
+          @for (page of pages(); track page) {
+            <button
+              class="page_btn"
+              [class.active]="page === currentPage()"
+              (click)="goToPage(page)"
+            >{{ page }}</button>
+          }
+          <button class="page_btn" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === totalPages()">→</button>
+        </div>
+      }
     }
-
-    @if (!isLoading && totalPages > 1) {
-  <div class="pagination">
-    <button class="page_btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">←</button>
-
-    @for (page of pages; track page) {
-      <button
-        class="page_btn"
-        [class.active]="page === currentPage"
-        (click)="goToPage(page)"
-      >{{ page }}</button>
-    }
-
-    <button class="page_btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">→</button>
-  </div>
-}
   </div>
 </section>
 
 <div class="side-panel">
-  <button class="panel" (click)="onToggleForm()" [disabled]="isLoading" title="Добавить статью">
-    <img src="images/Post add.svg" alt="Добавить статью">
+  <button mat-icon-button class="panel" (click)="onToggleForm()" [disabled]="isLoading()" title="Добавить статью">
+    <mat-icon>post_add</mat-icon>
   </button>
-  <button class="panel" (click)="openStats()" title="Статистика">
-    <img src="images/stats.svg" alt="Статистика">
+  <button mat-icon-button class="panel" (click)="openStats()" title="Статистика">
+    <mat-icon>bar_chart</mat-icon>
   </button>
 </div>
 
@@ -69,7 +67,7 @@
     <div class="cell">
       <div class="sum_art">
         <p>Всего статей:</p>
-        <b>{{ total }}</b>
+        <b>{{ total() }}</b>
       </div>
       <div class="comment">
         <p>Комментарии:</p>
@@ -79,10 +77,10 @@
   </div>
 </dialog>
 
-@if (showForm) {
+@if (showForm()) {
   <section class="add_article">
     <app-article-form
-      [editArticle]="editingArticle"
+      [editArticle]="editingArticle()"
       (submitArticle)="saveArticle($event)"
       (cancel)="onCancelForm()"
     ></app-article-form>

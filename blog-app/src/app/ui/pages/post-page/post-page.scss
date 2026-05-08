@@ -1,0 +1,85 @@
+.post_page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.post_detail {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 30px;
+  align-items: flex-start;
+}
+
+.post_img {
+  width: 600px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.post_info {
+  flex: 1;
+  padding-top: 0;
+}
+
+.post_info h1 {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.post_info p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 0;
+}
+.rating span {
+  font-size: 15px;
+  margin-right: 4px;
+  color: #323743;
+  line-height: 1;
+}
+
+.comments {
+  margin-bottom: 24px;
+}
+
+.comments h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.comment_card {
+  margin-bottom: 16px;
+}
+
+.no_comments {
+  color: #68686A;
+  font-size: 16px;
+}
+
+.add_comment {
+  display: flex;
+  flex-direction: column;
+  max-width: 550px;
+  gap: 4px;
+  margin-top: 16px;
+}
+
+.add_comment h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+mat-form-field {
+  width: 100%;
+}
