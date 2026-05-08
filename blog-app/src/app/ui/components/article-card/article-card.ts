@@ -1,9 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Article } from '../../../models/article';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-article-card',
-  imports: [],
+  imports: [RouterLink, MatIconModule, MatButtonModule],
   templateUrl: './article-card.html',
   styleUrl: './article-card.scss'
 })

@@ -1,23 +1,20 @@
 <article>
   <div class="post_content">
     <p class="post_category">{{ article.category }}</p>
-    <h2>{{ article.title }}</h2>
+    <h2><a [routerLink]="['/post', article.id]">{{ article.title }}</a></h2>
     <p>{{ article.description }}</p>
   </div>
   <div class="post_image">
-    <img class="post_im" [src]="article.image" [alt]="article.imageAlt">
+    <a [routerLink]="['/post', article.id]">
+      <img class="post_im" [src]="article.image" [alt]="article.imageAlt">
+    </a>
   </div>
   <div class="card_actions">
-    <button 
-      class="delete_btn" 
-      (click)="onDelete()" 
-      title="Удалить статью"
-      [disabled]="isEditing"
-    >
-      <img src="images/Delete.svg" alt="Удалить">
+    <button mat-icon-button class="delete_btn" (click)="onDelete()" title="Удалить статью" [disabled]="isEditing">
+      <mat-icon>delete</mat-icon>
     </button>
-    <button class="edit_btn" (click)="onEdit()" title="Редактировать статью">
-      <img src="images/edit.svg" alt="Редактировать">
+    <button mat-icon-button class="edit_btn" (click)="onEdit()" title="Редактировать статью">
+      <mat-icon>edit</mat-icon>
     </button>
   </div>
 </article>

@@ -4,12 +4,15 @@ import { ArticleCard } from '../../components/article-card/article-card';
 import { ArticleForm } from '../../components/article-form/article-form';
 import { ARTICLES_SERVICE_TOKEN } from '../../../services/articles/articles-service.token';
 import { ArticlesStoreService } from '../../../services/articles/articles-store.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { Title } from '@angular/platform-browser';
 
 const PAGE_SIZE = 7;
 
 @Component({
   selector: 'app-blog-page',
-  imports: [ArticleCard, ArticleForm],
+  imports: [ArticleCard, ArticleForm, MatIconModule, MatButtonModule],
   templateUrl: './blog-page.html',
   styleUrl: './blog-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -19,6 +22,7 @@ export class BlogPage implements OnInit {
 
   private articlesService = inject(ARTICLES_SERVICE_TOKEN);
   private store = inject(ArticlesStoreService);
+  private titleService = inject(Title);
 
   showForm = signal(false);
   isLoading = signal(true);
@@ -33,6 +37,7 @@ export class BlogPage implements OnInit {
   );
 
   ngOnInit() {
+    this.titleService.setTitle('Блог');
     this.loadArticles(this.currentPage());
   }
 
