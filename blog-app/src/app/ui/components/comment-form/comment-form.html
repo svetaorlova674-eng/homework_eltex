@@ -1,0 +1,13 @@
+<form (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline">
+    <mat-label>Ваше имя</mat-label>
+    <input matInput [(ngModel)]="authorName" name="author" placeholder="Имя">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Комментарий</mat-label>
+    <textarea matInput [(ngModel)]="commentText" name="text" placeholder="Текст комментария" rows="4"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Отправить</button>
+</form>

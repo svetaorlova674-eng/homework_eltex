@@ -1,26 +1,24 @@
-@if (post()) {
+@let data = post();
+
+@if (data) {
   <div class="post_page">
 
     <section class="post_detail">
-      <img [src]="post()!.image" [alt]="post()!.title" class="post_img">
+      <img [src]="data.image" [alt]="data.title" class="post_img">
       <div class="post_info">
-        <h1>{{ post()!.title }}</h1>
-        <p>{{ post()!.description }}</p>
+        <h1>{{ data.title }}</h1>
+        <p>{{ data.description }}</p>
         <div class="rating">
           <span>Рейтинг статьи:</span>
-          @for (star of [1,2,3,4,5]; track star) {
-            <button mat-icon-button (click)="updatePostRating(star)">
-              <mat-icon>{{ star <= post()!.rating ? 'star' : 'star_border' }}</mat-icon>
-            </button>
-          }
+          <app-star-rating [rating]="data.rating" (ratingChange)="updatePostRating($event)" />
         </div>
       </div>
     </section>
 
     <section class="comments">
-      <h2>Комментарии ({{ post()!.comments.length }})</h2>
+      <h2>Комментарии ({{ data.comments.length }})</h2>
 
-      @for (comment of post()!.comments; track comment.id) {
+      @for (comment of data.comments; track comment.id) {
         <mat-card class="comment_card">
           <mat-card-header>
             <mat-card-title>{{ comment.author }}</mat-card-title>
@@ -29,11 +27,7 @@
           <mat-card-content>
             <p>{{ comment.text }}</p>
             <div class="rating">
-              @for (star of [1,2,3,4,5]; track star) {
-                <button mat-icon-button (click)="updateCommentRating(comment.id, star)">
-                  <mat-icon>{{ star <= comment.rating ? 'star' : 'star_border' }}</mat-icon>
-                </button>
-              }
+              <app-star-rating [rating]="comment.rating" (ratingChange)="updateCommentRating(comment.id, $event)" />
             </div>
           </mat-card-content>
         </mat-card>
@@ -44,17 +38,7 @@
 
     <section class="add_comment">
       <h3>Добавить комментарий</h3>
-      <mat-form-field appearance="outline">
-        <mat-label>Ваше имя</mat-label>
-        <input matInput [ngModel]="authorName()" (ngModelChange)="authorName.set($event)" placeholder="Имя">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Комментарий</mat-label>
-        <textarea matInput [ngModel]="commentText()" (ngModelChange)="commentText.set($event)" placeholder="Текст комментария" rows="4"></textarea>
-      </mat-form-field>
-      <button mat-raised-button color="primary" (click)="addComment()">
-        Отправить
-      </button>
+      <app-comment-form (submitted)="addComment($event)" />
     </section>
 
   </div>
