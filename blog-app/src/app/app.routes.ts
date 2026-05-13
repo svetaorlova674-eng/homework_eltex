@@ -6,10 +6,12 @@ import { PostPage } from './ui/pages/post-page/post-page';
 export const routes: Routes = [
   {
     path: '',
+    title: 'Home',
     component: MainPage
   },
   {
     path: 'blog',
+    title: 'My Blog',
     component: BlogPage
   },
   {

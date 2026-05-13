@@ -1,0 +1,5 @@
+@for (star of stars; track star) {
+  <button mat-icon-button (click)="onStarClick(star)">
+    <mat-icon>{{ star <= rating ? 'star' : 'star_border' }}</mat-icon>
+  </button>
+}

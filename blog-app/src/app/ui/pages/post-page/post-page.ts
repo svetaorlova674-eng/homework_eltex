@@ -1,17 +1,16 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { POST_SERVICE_TOKEN } from '../../../services/post/post-service.token';
 import { PostStoreService } from '../../../services/post/post-store.service';
-import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
 import { Title } from '@angular/platform-browser';
+import { StarRating } from '../../components/star-rating/star-rating';
+import { CommentForm } from '../../components/comment-form/comment-form';
 
 @Component({
   selector: 'app-post-page',
-  imports: [FormsModule, MatCardModule, MatButtonModule, MatInputModule, MatIconModule],
+  imports: [MatCardModule, StarRating, CommentForm],
+  providers: [PostStoreService],
   templateUrl: './post-page.html',
   styleUrl: './post-page.scss'
 })
@@ -21,9 +20,7 @@ export class PostPage implements OnInit {
   private store = inject(PostStoreService);
   private titleService = inject(Title);
 
-  post = this.store.post;
-  authorName = signal('');
-  commentText = signal('');
+  protected post = this.store.post;
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -33,7 +30,7 @@ export class PostPage implements OnInit {
     });
   }
 
-  updatePostRating(rating: number) {
+  protected updatePostRating(rating: number) {
     const post = this.post();
     if (!post) return;
     this.postService.updatePostRating(post.id, rating).subscribe(updated => {
@@ -41,7 +38,7 @@ export class PostPage implements OnInit {
     });
   }
 
-  updateCommentRating(commentId: number, rating: number) {
+  protected updateCommentRating(commentId: number, rating: number) {
     const post = this.post();
     if (!post) return;
     this.postService.updateCommentRating(post.id, commentId, rating).subscribe(updated => {
@@ -49,17 +46,11 @@ export class PostPage implements OnInit {
     });
   }
 
-  addComment() {
+  protected addComment(data: { author: string; text: string }) {
     const post = this.post();
-    if (!post || !this.authorName() || !this.commentText()) return;
-    this.postService.addComment(post.id, {
-      author: this.authorName(),
-      text: this.commentText(),
-      rating: 0
-    }).subscribe(updated => {
+    if (!post) return;
+    this.postService.addComment(post.id, { ...data, rating: 0 }).subscribe(updated => {
       this.store.savePost(updated);
-      this.authorName.set('');
-      this.commentText.set('');
     });
   }
 }

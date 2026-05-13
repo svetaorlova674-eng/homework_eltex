@@ -1,9 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { PostDetail } from './types/post-detail';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PostStoreService {
   post = signal<PostDetail | null>(null);
 
