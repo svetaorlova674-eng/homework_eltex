@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnChanges, SimpleChanges, computed, input, inject, effect } from '@angular/core';
+import { Component, Output, EventEmitter, computed, input, effect } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Article } from '../../../models/article';
 
@@ -16,22 +16,18 @@ interface MinLengthValidationInfo {
 export class ArticleForm {
   editArticle = input<Article | null>(null);
 
-  @Output() submitArticle = new EventEmitter<Article>();
+  @Output() submitArticle = new EventEmitter<{ article: Article; file?: File }>();
   @Output() cancel = new EventEmitter<void>();
 
   protected isEditMode = computed<boolean>(() => Boolean(this.editArticle()));
-
-  protected formTitle = computed(() =>
-    this.editArticle() ? 'Изменить статью' : 'Добавить статью'
-  );
-
-  protected saveButtonTitle = computed(() =>
-    this.editArticle() ? 'Сохранить' : 'Добавить'
-  );
+  protected formTitle = computed(() => this.editArticle() ? 'Изменить статью' : 'Добавить статью');
+  protected saveButtonTitle = computed(() => this.editArticle() ? 'Сохранить' : 'Добавить');
+  protected selectedFile: File | null = null;
 
   protected form = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.minLength(25)]),
-    description: new FormControl('', [Validators.required])
+    description: new FormControl('', [Validators.required]),
+    category: new FormControl('')
   });
 
   constructor() {
@@ -40,12 +36,21 @@ export class ArticleForm {
       if (article) {
         this.form.patchValue({
           title: article.title,
-          description: article.description
+          description: article.description,
+          category: article.category
         });
       } else {
         this.form.reset();
+        this.selectedFile = null;
       }
     });
+  }
+
+  protected onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      this.selectedFile = input.files[0];
+    }
   }
 
   protected hasError(controlName: string): boolean {
@@ -57,9 +62,7 @@ export class ArticleForm {
     const control = this.form.get(controlName);
     const errors = control?.errors ?? null;
     if (errors) {
-      return Object.entries(errors).map(([key, value]) =>
-        this.getErrorStr(key, value)
-      );
+      return Object.entries(errors).map(([key, value]) => this.getErrorStr(key, value));
     }
     return [];
   }
@@ -79,13 +82,17 @@ export class ArticleForm {
   onSubmit() {
     if (this.form.invalid) return;
     this.submitArticle.emit({
-      id: this.editArticle()?.id || 0,
-      title: this.form.value.title!,
-      description: this.form.value.description!,
-      category: this.editArticle()?.category || '',
-      image: this.editArticle()?.image || 'images/paris.png',
-      imageAlt: this.form.value.title!
+      article: {
+        id: this.editArticle()?.id || '',
+        title: this.form.value.title!,
+        description: this.form.value.description!,
+        category: this.form.value.category || '',
+        image: this.editArticle()?.image || 'images/paris.png',
+        imageAlt: this.form.value.title!
+      },
+      file: this.selectedFile ?? undefined
     });
     this.form.reset();
+    this.selectedFile = null;
   }
 }

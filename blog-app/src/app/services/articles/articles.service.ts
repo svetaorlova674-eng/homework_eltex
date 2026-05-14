@@ -32,23 +32,23 @@ export class ArticlesService implements IArticlesService {
     return of(this.getResponse(articles, page, pageSize));
   }
 
-  addArticle(article: Article): Observable<ArticleResponse> {
-    const articles = this.loadFromStorage();
-    const newArticle = { ...article, id: Date.now() };
-    articles.push(newArticle);
-    this.saveToStorage(articles);
-    const page = Math.ceil(articles.length / 7);
-    return of(this.getResponse(articles, page, 7));
-  }
+addArticle(article: Article, file?: File): Observable<ArticleResponse> {
+  const articles = this.loadFromStorage();
+  const newArticle = { ...article, id: String(Date.now()) };
+  articles.push(newArticle);
+  this.saveToStorage(articles);
+  const page = Math.ceil(articles.length / 7);
+  return of(this.getResponse(articles, page, 7));
+}
 
-  updateArticle(article: Article): Observable<ArticleResponse> {
-    const articles = this.loadFromStorage();
-    const updated = articles.map(a => a.id === article.id ? { ...a, ...article } : a);
-    this.saveToStorage(updated);
-    return of(this.getResponse(updated, 1, 7));
-  }
+updateArticle(article: Article, file?: File): Observable<ArticleResponse> {
+  const articles = this.loadFromStorage();
+  const updated = articles.map(a => a.id === article.id ? { ...a, ...article } : a);
+  this.saveToStorage(updated);
+  return of(this.getResponse(updated, 1, 7));
+}
 
-  deleteArticle(id: number): Observable<ArticleResponse> {
+  deleteArticle(id: string): Observable<ArticleResponse> {
     const articles = this.loadFromStorage();
     const filtered = articles.filter(a => a.id !== id);
     this.saveToStorage(filtered);

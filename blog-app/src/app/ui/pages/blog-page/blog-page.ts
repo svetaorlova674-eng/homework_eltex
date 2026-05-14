@@ -58,7 +58,7 @@ export class BlogPage implements OnInit {
     this.loadArticles(page);
   }
 
-  deleteArticle(id: number) {
+  deleteArticle(id: string) {
     this.articlesService.deleteArticle(id).subscribe(response => {
       this.store.saveArticles(response.articles);
       this.store.saveTotal(response.total);
@@ -74,22 +74,22 @@ export class BlogPage implements OnInit {
     this.showForm.set(true);
   }
 
-  saveArticle(article: Article) {
-    if (this.editingArticle()) {
-      this.articlesService.updateArticle(article).subscribe(response => {
-        this.store.saveArticles(response.articles);
-        this.store.saveTotal(response.total);
-      });
-    } else {
-      this.articlesService.addArticle(article).subscribe(response => {
-        this.store.saveArticles(response.articles);
-        this.store.saveTotal(response.total);
-        this.store.savePage(this.totalPages());
-      });
-    }
-    this.showForm.set(false);
-    this.editingArticle.set(null);
+saveArticle(data: { article: Article; file?: File }) {
+  if (this.editingArticle()) {
+    this.articlesService.updateArticle(data.article, data.file).subscribe(response => {
+      this.store.saveArticles(response.articles);
+      this.store.saveTotal(response.total);
+    });
+  } else {
+    this.articlesService.addArticle(data.article, data.file).subscribe(response => {
+      this.store.saveArticles(response.articles);
+      this.store.saveTotal(response.total);
+      this.store.savePage(this.totalPages());
+    });
   }
+  this.showForm.set(false);
+  this.editingArticle.set(null);
+}
 
   onCancelForm() {
     this.showForm.set(false);

@@ -2,6 +2,7 @@
   <h3>{{ formTitle() }}</h3>
   <div class="form_article">
     <div [formGroup]="form">
+
       <div class="control">
         <label>Заголовок *</label>
         <input
@@ -31,12 +32,30 @@
         }
       </div>
 
+      <div class="control">
+        <label>Категория</label>
+        <input
+          type="text"
+          formControlName="category"
+          placeholder="Название категории"
+        >
+      </div>
+
+      <div class="control">
+        <label>Картинка</label>
+        <input type="file" accept="image/*" (change)="onFileChange($event)">
+        @if (selectedFile) {
+          <span>Выбран файл: {{ selectedFile.name }}</span>
+        }
+      </div>
+
       <div class="but">
         <button class="sub" (click)="onSubmit()" [disabled]="form.invalid">
           {{ saveButtonTitle() }}
         </button>
         <button class="cancel" (click)="cancel.emit()">Отмена</button>
       </div>
+
     </div>
   </div>
 </div>
