@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class ArticleCard {
   @Input() article!: Article;
   @Input() isEditing: boolean = false;
-  @Output() delete = new EventEmitter<number>();
+  @Output() delete = new EventEmitter<string>();
   @Output() edit = new EventEmitter<Article>();
 
   onDelete() {

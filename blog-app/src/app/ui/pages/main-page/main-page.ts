@@ -27,7 +27,7 @@ export class MainPage implements OnInit {
     });
   }
 
-  deleteArticle(id: number) {
+  deleteArticle(id: string) {
     this.articlesService.deleteArticle(id).subscribe(response => {
       this.latestArticles = response.articles.slice(-2);
     });
