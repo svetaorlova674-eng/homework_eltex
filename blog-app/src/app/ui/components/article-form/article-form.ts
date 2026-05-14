@@ -1,6 +1,11 @@
-import { Component, Output, EventEmitter, computed, input, effect } from '@angular/core';
+import { Component, Output, EventEmitter, computed, input, effect, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { Article } from '../../../models/article';
+import { CategoriesService, Category } from '../../../services/categories/categories';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface MinLengthValidationInfo {
   requiredLength: number;
@@ -9,11 +14,13 @@ interface MinLengthValidationInfo {
 
 @Component({
   selector: 'app-article-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatAutocompleteModule, MatInputModule, MatFormFieldModule],
   templateUrl: './article-form.html',
   styleUrl: './article-form.scss'
 })
 export class ArticleForm {
+  private categoriesService = inject(CategoriesService);
+
   editArticle = input<Article | null>(null);
 
   @Output() submitArticle = new EventEmitter<{ article: Article; file?: File }>();
@@ -23,6 +30,14 @@ export class ArticleForm {
   protected formTitle = computed(() => this.editArticle() ? 'Изменить статью' : 'Добавить статью');
   protected saveButtonTitle = computed(() => this.editArticle() ? 'Сохранить' : 'Добавить');
   protected selectedFile: File | null = null;
+  protected allCategories = toSignal(this.categoriesService.getCategories(), { initialValue: [] });
+
+  protected filteredCategories = computed(() => {
+    const input = this.form.get('category')?.value?.toLowerCase() ?? '';
+    return this.allCategories().filter((c: Category) =>
+      c.name.toLowerCase().includes(input)
+    );
+  });
 
   protected form = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.minLength(25)]),
