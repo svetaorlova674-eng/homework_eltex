@@ -17,45 +17,48 @@ export class PostService implements IPostService {
     localStorage.setItem(LS_KEY, JSON.stringify(articles));
   }
 
-  getPost(id: number): Observable<PostDetail> {
+  getPost(id: string): Observable<PostDetail> {
     const articles = this.loadFromStorage();
-    const article = articles.find((a: any) => a.id === id);
+    const article = articles.find((a: any) => String(a.id) === id);
     const post: PostDetail = {
-      id: article.id,
+      id: String(article.id),
       title: article.title,
       description: article.description,
       image: article.image || 'images/paris.png',
       rating: article.rating || 0,
-      comments: article.comments || []
+      comments: (article.comments || []).map((c: any) => ({
+        ...c,
+        id: String(c.id)
+      }))
     };
     return of(post);
   }
 
-  addComment(postId: number, comment: Omit<Comment, 'id' | 'date'>): Observable<PostDetail> {
+  addComment(postId: string, comment: Omit<Comment, 'id' | 'date'>): Observable<PostDetail> {
     const articles = this.loadFromStorage();
-    const index = articles.findIndex((a: any) => a.id === postId);
+    const index = articles.findIndex((a: any) => String(a.id) === postId);
     if (!articles[index].comments) articles[index].comments = [];
     articles[index].comments.push({
       ...comment,
-      id: Date.now(),
+      id: String(Date.now()),
       date: new Date().toLocaleDateString()
     });
     this.saveToStorage(articles);
     return this.getPost(postId);
   }
 
-  updateCommentRating(postId: number, commentId: number, rating: number): Observable<PostDetail> {
+  updateCommentRating(postId: string, commentId: string, rating: number): Observable<PostDetail> {
     const articles = this.loadFromStorage();
-    const index = articles.findIndex((a: any) => a.id === postId);
-    const commentIndex = articles[index].comments.findIndex((c: any) => c.id === commentId);
+    const index = articles.findIndex((a: any) => String(a.id) === postId);
+    const commentIndex = articles[index].comments.findIndex((c: any) => String(c.id) === commentId);
     articles[index].comments[commentIndex].rating = rating;
     this.saveToStorage(articles);
     return this.getPost(postId);
   }
 
-  updatePostRating(postId: number, rating: number): Observable<PostDetail> {
+  updatePostRating(postId: string, rating: number): Observable<PostDetail> {
     const articles = this.loadFromStorage();
-    const index = articles.findIndex((a: any) => a.id === postId);
+    const index = articles.findIndex((a: any) => String(a.id) === postId);
     articles[index].rating = rating;
     this.saveToStorage(articles);
     return this.getPost(postId);
