@@ -19,21 +19,21 @@ export class PostService implements IPostService {
 
   getPost(id: number): Observable<PostDetail> {
     const articles = this.loadFromStorage();
-    const article = articles.find((a: any) => a.id === id);
-    const post: PostDetail = {
+    const article = articles.find((a: any) => String(a.id) === String(id));
+    if (!article) return of({} as PostDetail);
+    return of({
       id: article.id,
       title: article.title,
       description: article.description,
-      image: article.image || 'images/paris.png',
+      image: article.image || 'images/post.jpg',
       rating: article.rating || 0,
       comments: article.comments || []
-    };
-    return of(post);
+    });
   }
 
   addComment(postId: number, comment: Omit<Comment, 'id' | 'date'>): Observable<PostDetail> {
     const articles = this.loadFromStorage();
-    const index = articles.findIndex((a: any) => a.id === postId);
+    const index = articles.findIndex((a: any) => String(a.id) === String(postId));
     if (!articles[index].comments) articles[index].comments = [];
     articles[index].comments.push({
       ...comment,
@@ -46,8 +46,8 @@ export class PostService implements IPostService {
 
   updateCommentRating(postId: number, commentId: number, rating: number): Observable<PostDetail> {
     const articles = this.loadFromStorage();
-    const index = articles.findIndex((a: any) => a.id === postId);
-    const commentIndex = articles[index].comments.findIndex((c: any) => c.id === commentId);
+    const index = articles.findIndex((a: any) => String(a.id) === String(postId));
+    const commentIndex = articles[index].comments.findIndex((c: any) => String(c.id) === String(commentId));
     articles[index].comments[commentIndex].rating = rating;
     this.saveToStorage(articles);
     return this.getPost(postId);
@@ -55,7 +55,7 @@ export class PostService implements IPostService {
 
   updatePostRating(postId: number, rating: number): Observable<PostDetail> {
     const articles = this.loadFromStorage();
-    const index = articles.findIndex((a: any) => a.id === postId);
+    const index = articles.findIndex((a: any) => String(a.id) === String(postId));
     articles[index].rating = rating;
     this.saveToStorage(articles);
     return this.getPost(postId);

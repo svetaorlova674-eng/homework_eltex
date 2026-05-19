@@ -1,10 +1,11 @@
-import { Component, Output, EventEmitter, computed, input, effect, inject, signal } from '@angular/core';
+import { Component, Output, EventEmitter, computed, input, effect, inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Article } from '../../../models/article';
-import { CategoriesService, Category } from '../../../services/categories/categories';
+import { CategoriesService } from '../../../services/categories/categories';
+import { Category } from '../../../services/articles/types/category';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 interface MinLengthValidationInfo {
@@ -30,7 +31,7 @@ export class ArticleForm {
   protected formTitle = computed(() => this.editArticle() ? 'Изменить статью' : 'Добавить статью');
   protected saveButtonTitle = computed(() => this.editArticle() ? 'Сохранить' : 'Добавить');
   protected selectedFile: File | null = null;
-  protected allCategories = toSignal(this.categoriesService.getCategories(), { initialValue: [] });
+  protected allCategories = toSignal(this.categoriesService.getCategories(), { initialValue: [] as Category[] });
 
   protected filteredCategories = computed(() => {
     const input = this.form.get('category')?.value?.toLowerCase() ?? '';
@@ -94,16 +95,22 @@ export class ArticleForm {
     }
   }
 
+  private getCategoryId(categoryName: string | null): string | undefined {
+    return this.allCategories().find(c => c.name === categoryName)?.id;
+  }
+
   onSubmit() {
     if (this.form.invalid) return;
+    const data = this.form.getRawValue();
     this.submitArticle.emit({
       article: {
         id: this.editArticle()?.id || '',
-        title: this.form.value.title!,
-        description: this.form.value.description!,
-        category: this.form.value.category || '',
+        title: data.title ?? '',
+        description: data.description ?? '',
+        categoryId: this.getCategoryId(data.category),
+        category: data.category ?? '',
         image: this.editArticle()?.image || 'images/paris.png',
-        imageAlt: this.form.value.title!
+        imageAlt: data.title ?? ''
       },
       file: this.selectedFile ?? undefined
     });
