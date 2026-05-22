@@ -10,7 +10,7 @@ export class ArticlesMapperService {
       title: api.title,
       description: api.content,
       category: categoryMap.get(api.categoryId) ?? api.categoryId ?? '',
-      image: api.imgSrc ? api.imgSrc : 'images/post.jpg',
+      image: api.imgSrc ? api.imgSrc : 'images/paris.png',
       imageAlt: api.title
     };
   }

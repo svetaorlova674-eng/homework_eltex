@@ -1,4 +1,6 @@
-import { Component, ViewChild, ElementRef, OnInit, inject, ChangeDetectionStrategy, signal, computed } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, inject, ChangeDetectionStrategy, signal, computed, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
 import { Article } from '../../../models/article';
 import { ArticleCard } from '../../components/article-card/article-card';
 import { ArticleForm } from '../../components/article-form/article-form';
@@ -23,6 +25,7 @@ export class BlogPage implements OnInit {
   private articlesService = inject(ARTICLES_SERVICE_TOKEN);
   private store = inject(ArticlesStoreService);
   private titleService = inject(Title);
+  private destroyRef = inject(DestroyRef);
 
   showForm = signal(false);
   isLoading = signal(true);
@@ -44,12 +47,14 @@ export class BlogPage implements OnInit {
   private loadArticles(page: number) {
     this.isLoading.set(true);
     setTimeout(() => {
-      this.articlesService.getArticles(page, PAGE_SIZE).subscribe(response => {
-        this.store.saveArticles(response.articles);
-        this.store.saveTotal(response.total);
-        this.store.savePage(page);
-        this.isLoading.set(false);
-      });
+      this.articlesService.getArticles(page, PAGE_SIZE)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(response => {
+          this.store.saveArticles(response.articles);
+          this.store.saveTotal(response.total);
+          this.store.savePage(page);
+          this.isLoading.set(false);
+        });
     }, 1500);
   }
 
@@ -59,7 +64,10 @@ export class BlogPage implements OnInit {
   }
 
   deleteArticle(id: string) {
-    this.articlesService.deleteArticle(id).subscribe(response => {
+    this.articlesService.deleteArticle(id).pipe(
+      switchMap(() => this.articlesService.getArticles(this.currentPage(), PAGE_SIZE)),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(response => {
       this.store.saveArticles(response.articles);
       this.store.saveTotal(response.total);
       if (this.editingArticle()?.id === id) {
@@ -74,22 +82,22 @@ export class BlogPage implements OnInit {
     this.showForm.set(true);
   }
 
-saveArticle(data: { article: Article; file?: File }) {
-  if (this.editingArticle()) {
-    this.articlesService.updateArticle(data.article, data.file).subscribe(response => {
+  saveArticle(data: { article: Article; file?: File }) {
+    const save$ = this.editingArticle()
+      ? this.articlesService.updateArticle(data.article, data.file)
+      : this.articlesService.addArticle(data.article, data.file);
+
+    save$.pipe(
+      switchMap(() => this.articlesService.getArticles(this.currentPage(), PAGE_SIZE)),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(response => {
       this.store.saveArticles(response.articles);
       this.store.saveTotal(response.total);
     });
-  } else {
-    this.articlesService.addArticle(data.article, data.file).subscribe(response => {
-      this.store.saveArticles(response.articles);
-      this.store.saveTotal(response.total);
-      this.store.savePage(this.totalPages());
-    });
+
+    this.showForm.set(false);
+    this.editingArticle.set(null);
   }
-  this.showForm.set(false);
-  this.editingArticle.set(null);
-}
 
   onCancelForm() {
     this.showForm.set(false);
