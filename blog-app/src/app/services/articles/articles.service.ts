@@ -21,10 +21,7 @@ export class ArticlesService implements IArticlesService {
     const total = articles.length;
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
-    return {
-      articles: articles.slice(start, end),
-      total
-    };
+    return { articles: articles.slice(start, end), total };
   }
 
   getArticles(page: number, pageSize: number): Observable<ArticleResponse> {
@@ -32,21 +29,25 @@ export class ArticlesService implements IArticlesService {
     return of(this.getResponse(articles, page, pageSize));
   }
 
-addArticle(article: Article, file?: File): Observable<ArticleResponse> {
-  const articles = this.loadFromStorage();
-  const newArticle = { ...article, id: String(Date.now()) };
-  articles.push(newArticle);
-  this.saveToStorage(articles);
-  const page = Math.ceil(articles.length / 7);
-  return of(this.getResponse(articles, page, 7));
-}
+  addArticle(article: Article, _file?: File): Observable<ArticleResponse> {
+    const articles = this.loadFromStorage();
+    const newArticle: Article = {
+      ...article,
+      id: String(Date.now()),
+      image: 'images/paris.png'
+    };
+    articles.push(newArticle);
+    this.saveToStorage(articles);
+    const page = Math.ceil(articles.length / 7);
+    return of(this.getResponse(articles, page, 7));
+  }
 
-updateArticle(article: Article, file?: File): Observable<ArticleResponse> {
-  const articles = this.loadFromStorage();
-  const updated = articles.map(a => a.id === article.id ? { ...a, ...article } : a);
-  this.saveToStorage(updated);
-  return of(this.getResponse(updated, 1, 7));
-}
+  updateArticle(article: Article, _file?: File): Observable<ArticleResponse> {
+    const articles = this.loadFromStorage();
+    const updated = articles.map(a => a.id === article.id ? { ...a, ...article } : a);
+    this.saveToStorage(updated);
+    return of(this.getResponse(updated, 1, 7));
+  }
 
   deleteArticle(id: string): Observable<ArticleResponse> {
     const articles = this.loadFromStorage();
