@@ -1,63 +1,52 @@
 import { Injectable, inject } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { Observable, forkJoin, map } from 'rxjs';
 import { PostDetail } from './types/post-detail';
 import { IPostService } from './post-service.interface';
 import { Comment } from './types/comment';
+import {
+  GET_ARTICLE,
+  GET_COMMENTS,
+  VOTE_ARTICLE,
+  VOTE_COMMENT,
+  CREATE_COMMENT
+} from './post-graphql.queries';
 
-const GET_ARTICLE = gql`
-  query GetArticle($id: ID!) {
-    article(id: $id) {
-      id
-      title
-      content
-      imgSrc
-      avgRating
-    }
-  }
-`;
+interface ArticleGql {
+  id: string;
+  title: string;
+  content: string;
+  imgSrc: string | null;
+  avgRating: number | null;
+}
 
-const GET_COMMENTS = gql`
-  query GetComments($articleId: ID!) {
-    commentsByArticle(articleId: $articleId) {
-      id
-      username
-      content
-      avgRating
-      createdAt
-    }
-  }
-`;
+interface CommentGql {
+  id: string;
+  username: string;
+  content: string;
+  avgRating: number | null;
+  createdAt: string;
+}
 
-const VOTE_ARTICLE = gql`
-  mutation VoteArticle($id: ID!, $vote: Float!) {
-    voteArticle(id: $id, vote: $vote) {
-      id
-      avgRating
-    }
-  }
-`;
+interface GetArticleQuery {
+  article: ArticleGql;
+}
 
-const VOTE_COMMENT = gql`
-  mutation VoteComment($id: ID!, $vote: Float!) {
-    voteComment(id: $id, vote: $vote) {
-      id
-      avgRating
-    }
-  }
-`;
+interface GetCommentsQuery {
+  commentsByArticle: CommentGql[];
+}
 
-const CREATE_COMMENT = gql`
-  mutation CreateComment($articleId: String!, $username: String!, $content: String!) {
-    createComment(createComment: { articleId: $articleId, username: $username, content: $content }) {
-      id
-      username
-      content
-      avgRating
-      createdAt
-    }
-  }
-`;
+interface VoteArticleQuery {
+  voteArticle: { id: string; avgRating: number };
+}
+
+interface VoteCommentQuery {
+  voteComment: { id: string; avgRating: number };
+}
+
+interface CreateCommentQuery {
+  createComment: CommentGql;
+}
 
 @Injectable()
 export class PostGraphqlService implements IPostService {
@@ -65,25 +54,25 @@ export class PostGraphqlService implements IPostService {
 
   getPost(id: string): Observable<PostDetail> {
     return forkJoin({
-      article: this.apollo.query<any>({
+      article: this.apollo.query<GetArticleQuery>({
         query: GET_ARTICLE,
         variables: { id }
       }),
-      comments: this.apollo.query<any>({
+      comments: this.apollo.query<GetCommentsQuery>({
         query: GET_COMMENTS,
         variables: { articleId: id }
       })
     }).pipe(
       map(({ article, comments }) => {
-        const a = article.data.article;
-        const c = comments.data.commentsByArticle;
+        const a = article.data!.article;
+        const c = comments.data!.commentsByArticle;
         return {
           id: String(a.id),
           title: a.title,
           description: a.content,
-          image: a.imgSrc ?? 'images/post.jpg',
+          image: a.imgSrc ?? 'images/paris.png',
           rating: Math.round(a.avgRating ?? 0),
-          comments: c.map((comment: any) => ({
+          comments: c.map(comment => ({
             id: String(comment.id),
             author: comment.username,
             text: comment.content,
@@ -96,31 +85,31 @@ export class PostGraphqlService implements IPostService {
   }
 
   updatePostRating(postId: string, rating: number): Observable<PostDetail> {
-    return this.apollo.mutate<any>({
+    return this.apollo.mutate<VoteArticleQuery>({
       mutation: VOTE_ARTICLE,
       variables: { id: postId, vote: rating }
     }).pipe(
       map(result => {
-        const a = result.data.voteArticle;
+        const a = result.data!.voteArticle;
         return { id: String(a.id), rating: Math.round(a.avgRating ?? 0) } as unknown as PostDetail;
       })
     );
   }
 
   updateCommentRating(postId: string, commentId: string, rating: number): Observable<PostDetail> {
-    return this.apollo.mutate<any>({
+    return this.apollo.mutate<VoteCommentQuery>({
       mutation: VOTE_COMMENT,
       variables: { id: commentId, vote: rating }
     }).pipe(
       map(result => {
-        const c = result.data.voteComment;
+        const c = result.data!.voteComment;
         return { id: String(c.id), rating: Math.round(c.avgRating ?? 0) } as unknown as PostDetail;
       })
     );
   }
 
   addComment(postId: string, comment: Omit<Comment, 'id' | 'date'>): Observable<PostDetail> {
-    return this.apollo.mutate<any>({
+    return this.apollo.mutate<CreateCommentQuery>({
       mutation: CREATE_COMMENT,
       variables: {
         articleId: postId,
@@ -129,7 +118,7 @@ export class PostGraphqlService implements IPostService {
       }
     }).pipe(
       map(result => {
-        const c = result.data.createComment;
+        const c = result.data!.createComment;
         return {
           id: String(c.id),
           author: c.username,
