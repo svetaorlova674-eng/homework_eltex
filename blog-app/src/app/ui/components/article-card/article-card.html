@@ -9,7 +9,7 @@
       <img class="post_im" [src]="article.image" [alt]="article.imageAlt">
     </a>
   </div>
-  <div class="card_actions">
+  <div class="card_actions" *appHasRole="'admin'">
     <button mat-icon-button class="delete_btn" (click)="onDelete()" title="Удалить статью" [disabled]="isEditing">
       <mat-icon>delete</mat-icon>
     </button>

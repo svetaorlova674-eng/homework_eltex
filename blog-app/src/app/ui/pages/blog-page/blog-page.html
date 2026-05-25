@@ -49,7 +49,7 @@
   </div>
 </section>
 
-<div class="side-panel">
+<div class="side-panel" *appHasRole="'admin'">
   <button mat-icon-button class="panel" (click)="onToggleForm()" [disabled]="isLoading()" title="Добавить статью">
     <mat-icon>post_add</mat-icon>
   </button>

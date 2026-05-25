@@ -1,8 +1,10 @@
 <form (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="outline">
-    <mat-label>Ваше имя</mat-label>
-    <input matInput [(ngModel)]="authorName" name="author" placeholder="Имя">
-  </mat-form-field>
+  @if (!isLoggedIn()) {
+    <mat-form-field appearance="outline">
+      <mat-label>Ваше имя</mat-label>
+      <input matInput [(ngModel)]="authorName" name="author" placeholder="Имя">
+    </mat-form-field>
+  }
 
   <mat-form-field appearance="outline">
     <mat-label>Комментарий</mat-label>
