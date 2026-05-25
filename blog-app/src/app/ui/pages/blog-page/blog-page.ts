@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, inject, ChangeDetectionStrategy, signal, computed, DestroyRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, inject, signal, computed, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { Article } from '../../../models/article';
@@ -9,15 +9,15 @@ import { ArticlesStoreService } from '../../../services/articles/articles-store.
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Title } from '@angular/platform-browser';
+import { HasRoleDirective } from '../../../directives/has-role.directive';
 
 const PAGE_SIZE = 7;
 
 @Component({
   selector: 'app-blog-page',
-  imports: [ArticleCard, ArticleForm, MatIconModule, MatButtonModule],
+  imports: [ArticleCard, ArticleForm, MatIconModule, MatButtonModule, HasRoleDirective],
   templateUrl: './blog-page.html',
-  styleUrl: './blog-page.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './blog-page.scss'
 })
 export class BlogPage implements OnInit {
   @ViewChild('statsDialog') statsDialog!: ElementRef<HTMLDialogElement>;

@@ -1,0 +1,44 @@
+<div class="auth_dialog">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+    <mat-tab label="Войти">
+      <div class="form">
+        <h2 class="form_title">Добро пожаловать</h2>
+        <p class="form_subtitle">Войдите в свой аккаунт</p>
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Логин</mat-label>
+          <input matInput [(ngModel)]="loginData.username" name="username">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Пароль</mat-label>
+          <input matInput type="password" [(ngModel)]="loginData.password" name="password">
+        </mat-form-field>
+        @if (error()) {
+          <p class="error">{{ error() }}</p>
+        }
+        <button class="submit_btn" (click)="onLogin()">Войти</button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Регистрация">
+      <div class="form">
+        <h2 class="form_title">Создать аккаунт</h2>
+        <p class="form_subtitle">Заполните данные для регистрации</p>
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Логин</mat-label>
+          <input matInput [(ngModel)]="registerData.username" name="reg-username">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="registerData.email" name="email">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Пароль</mat-label>
+          <input matInput type="password" [(ngModel)]="registerData.password" name="reg-password">
+        </mat-form-field>
+        @if (error()) {
+          <p class="error">{{ error() }}</p>
+        }
+        <button class="submit_btn" (click)="onRegister()">Зарегистрироваться</button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

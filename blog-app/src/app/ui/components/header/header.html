@@ -1,22 +1,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 <header>
-    <div class="menu">
-        <div class="logotype">
-            <img src="images/favicon.png" alt="Логотип">
-        </div>
-        <nav class="nav">
-            <ul class="nav_list">
-                <li>
-                    <a routerLink="/" routerLinkActive="nav-current" 
-                    [routerLinkActiveOptions]="{exact: true}" class="nav-active">About me</a>
-                </li>
-                <li>
-                    <a routerLink="/blog" routerLinkActive="nav-current" class="nav-active">Blog</a>
-                </li>
-                <li>
-                    <a class="nav-active" style="cursor:pointer" (click)="scrollToContacts()">Contact</a>
-                </li>
-            </ul>
-        </nav>
+  <div class="menu">
+    <div class="logotype">
+      <img src="images/favicon.png" alt="Логотип">
     </div>
+
+    <nav class="nav">
+      <ul class="nav_list">
+        <li>
+          <a routerLink="/" routerLinkActive="nav-current"
+            [routerLinkActiveOptions]="{exact: true}" class="nav-active">About me</a>
+        </li>
+        <li>
+          <a routerLink="/blog" routerLinkActive="nav-current" class="nav-active">Blog</a>
+        </li>
+        <li>
+          <a class="nav-active" style="cursor:pointer" (click)="scrollToContacts()">Contact</a>
+        </li>
+      </ul>
+
+      @if (isLoggedIn()) {
+        <button class="user_btn" [matMenuTriggerFor]="userMenu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <div mat-menu-item disabled>{{ user()?.username }}</div>
+          <button mat-menu-item (click)="logout()">Выйти</button>
+        </mat-menu>
+      } @else {
+        <button class="login_btn" (click)="openAuthDialog()">Вход</button>
+      }
+    </nav>
+  </div>
 </header>
