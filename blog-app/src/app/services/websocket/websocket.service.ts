@@ -1,12 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, DestroyRef, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { io, Socket } from 'socket.io-client';
-
-export interface WsMessage {
-  type: string;
-  payload: any;
-}
+import { WsMessage } from './websocket.types';
 
 @Injectable({ providedIn: 'root' })
 export class WebSocketService {
@@ -17,11 +13,10 @@ export class WebSocketService {
     if (!environment.useApi) return;
 
     try {
-     this.socket = io('http://localhost:3000', {
-    path: '/events',
-    transports: ['websocket'],
-    reconnection: true
-    });
+      this.socket = io('http://localhost:3000/events', {
+        transports: ['websocket'],
+        reconnection: true
+      });
 
       this.socket.on('comment-created', (data: WsMessage) => {
         this.messages$.next(data);
